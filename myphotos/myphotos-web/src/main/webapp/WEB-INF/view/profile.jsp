@@ -19,7 +19,7 @@
     <section>
         <h3>${profile.photoCount} Photos | Last photo: <fmt:formatDate value="${photos[0].created}" type="DATE" dateStyle="SHORT" />
         </h3>
-        <div id="photo-container" class="row" data-page="1" data-total-count="12" data-more-url="more.html">
+        <div id="photo-container" class="row" data-page="1" data-total-count="${profile.photoCount}" data-more-url="/photos/profile/more?profileId=${profile.id}&">
             <jsp:include page="../fragment/more-photos.jsp" />
         </div>
         <c:if test="${profile.photoCount > fn:length(photos)}">

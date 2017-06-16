@@ -5,6 +5,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn"     uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="tags"   tagdir="/WEB-INF/tags"%>
 
 <header id="header">
     <div class="inner">
@@ -26,10 +27,10 @@
                 <p>service, which allow you to share high-resolution photos for <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">free</a></p>
             </div>
             <div class="${'4u$ 12u$(xsmall)'}">
-                <tags:sort-mode-selector />
+                <tags:sort-mode-selector/>
             </div>
         </div>
-        <div id="photo-container" class="row" data-page="1" data-total-count="12" data-more-url="more.html">
+        <div id="photo-container" class="row" data-page="1" data-total-count="${totalCount}" data-more-url="/photos/popular/more?sort=${sortMode}&">
             <jsp:include page="../fragment/more-photos.jsp" />
         </div>
         <c:if test="${totalCount > fn:length(photos)}">
