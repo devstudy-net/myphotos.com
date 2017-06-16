@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 </>DevStudy.net.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.model;
+
+package net.devstudy.myphotos.common.model;
 
 import java.nio.file.Path;
+import net.devstudy.myphotos.model.ImageResource;
+
 /**
  * 
  * 
  * @author devstudy
  * @see http://devstudy.net
  */
-public interface ImageResource extends AutoCloseable{
+public class TempImageResource implements ImageResource{
 
-    Path getTempPath();
+    private final Path path;
+
+    public TempImageResource() {
+        this("jpg");
+    }
     
+    public TempImageResource(String extension) {
+        this.path = TempFileFactory.createTempFile(extension);
+    }
+
     @Override
-    void close();
+    public Path getTempPath() {
+        return path;
+    }
+
+    @Override
+    public void close() {
+        TempFileFactory.deleteTempFile(path);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", getClass().getSimpleName(), path);
+    }
+
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 </>DevStudy.net.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.model;
+
+package net.devstudy.myphotos.ejb.service;
 
 import java.nio.file.Path;
+import net.devstudy.myphotos.common.config.ImageCategory;
+import net.devstudy.myphotos.model.OriginalImage;
+
 /**
  * 
  * 
  * @author devstudy
  * @see http://devstudy.net
  */
-public interface ImageResource extends AutoCloseable{
+public interface ImageStorageService {
 
-    Path getTempPath();
+    String saveProtectedImage(Path path);
     
-    @Override
-    void close();
+    String savePublicImage(ImageCategory imageCategory, Path path);
+    
+    void deletePublicImage(String url);
+    
+    OriginalImage getOriginalImage(String originalUrl);
 }

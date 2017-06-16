@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 </>DevStudy.net.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.model;
 
-import java.nio.file.Path;
+package net.devstudy.myphotos.ejb.service.impl;
+
+import java.util.UUID;
+import javax.enterprise.context.ApplicationScoped;
+import net.devstudy.myphotos.ejb.service.FileNameGeneratorService;
+
 /**
  * 
  * 
  * @author devstudy
  * @see http://devstudy.net
  */
-public interface ImageResource extends AutoCloseable{
+@ApplicationScoped
+public class FileNameGeneratorServiceImpl implements FileNameGeneratorService{
 
-    Path getTempPath();
-    
     @Override
-    void close();
+    public String generateUniqueFileName() {
+        return UUID.randomUUID().toString()+".jpg";
+    }
 }

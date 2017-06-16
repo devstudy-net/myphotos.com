@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 </>DevStudy.net.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.model;
 
-import java.nio.file.Path;
+package net.devstudy.myphotos.ejb.service.interceptor;
+
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
+import javax.interceptor.InvocationContext;
+import net.devstudy.myphotos.model.ImageResource;
+
 /**
  * 
  * 
  * @author devstudy
  * @see http://devstudy.net
  */
-public interface ImageResource extends AutoCloseable{
+@Interceptor
+public class ImageResourceInterceptor {
 
-    Path getTempPath();
-    
-    @Override
-    void close();
+    @AroundInvoke
+    public Object aroundProcessImageResource(InvocationContext ic) throws Exception {
+        try(ImageResource imageResource = (ImageResource) ic.getParameters()[0]) {
+            return ic.proceed();
+        }
+    }
 }
