@@ -1,0 +1,44 @@
+<profiles>
+    <profile>
+        <firstName>Richard</firstName>
+        <lastName>Hendricks</lastName>
+        <avatarUrl>external/test-data/avatar/Richard Hendricks.jpg</avatarUrl>
+        <jobTitle>CEO of Pied Piper</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+    <profile>
+        <firstName>Jared</firstName>
+        <lastName>Dunn</lastName>
+        <avatarUrl>external/test-data/avatar/Jared Dunn.jpg</avatarUrl>
+        <jobTitle>Head of Business Development</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+    <profile>
+        <firstName>Dinesh</firstName>
+        <lastName>Chugtai</lastName>
+        <avatarUrl>external/test-data/avatar/Dinesh Chugtai.jpg</avatarUrl>
+        <jobTitle>Senior Programmer</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+    <profile>
+        <firstName>Bertram</firstName>
+        <lastName>Gilfoyle</lastName>
+        <avatarUrl>external/test-data/avatar/Bertram Gilfoyle.jpg</avatarUrl>
+        <jobTitle>Senior Systems Architect</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+    <profile>
+        <firstName>Erlich</firstName>
+        <lastName>Bachmann</lastName>
+        <avatarUrl>external/test-data/avatar/Erlich Bachmann.jpg</avatarUrl>
+        <jobTitle>Majority Investor</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+    <profile>
+        <firstName>Carla</firstName>
+        <lastName>Walton</lastName>
+        <avatarUrl>external/test-data/avatar/Carla Walton.jpg</avatarUrl>
+        <jobTitle>Fullstack Developer</jobTitle>
+        <location>Los Angeles, California</location>
+    </profile>
+</profiles>
