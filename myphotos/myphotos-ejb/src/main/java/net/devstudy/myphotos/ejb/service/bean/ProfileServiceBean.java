@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import net.devstudy.myphotos.common.annotation.cdi.Property;
 import net.devstudy.myphotos.common.config.ImageCategory;
+import net.devstudy.myphotos.ejb.model.URLImageResource;
 import net.devstudy.myphotos.ejb.repository.ProfileRepository;
 import net.devstudy.myphotos.ejb.service.ImageStorageService;
 import net.devstudy.myphotos.ejb.service.TranslitConverter;
@@ -99,6 +100,9 @@ public class ProfileServiceBean implements ProfileService{
             setProfileUid(profile);
         }
         profileRepository.create(profile);
+        if (uploadProfileAvatar && profile.getAvatarUrl() != null) {
+            uploadNewAvatar(profile, new URLImageResource(profile.getAvatarUrl()));
+        }
     }
     
     private void setProfileUid(Profile profile) {

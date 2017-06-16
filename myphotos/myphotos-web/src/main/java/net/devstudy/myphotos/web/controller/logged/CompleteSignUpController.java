@@ -16,34 +16,47 @@
 
 package net.devstudy.myphotos.web.controller.logged;
 
-import java.io.IOException;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.web.component.ProfileSignUpServiceProxy;
-import net.devstudy.myphotos.web.form.ProfileForm;
-import static net.devstudy.myphotos.web.util.RoutingUtils.forwardToPage;
+import net.devstudy.myphotos.common.annotation.group.SignUpGroup;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
-@WebServlet(urlPatterns = "/sign-up", loadOnStartup = 1)
-public class CurrentSignUpProgressController extends HttpServlet{
+@WebServlet(urlPatterns = "/sign-up/complete", loadOnStartup = 1)
+public class CompleteSignUpController extends AbstractProfileSaveController {
 
     @Inject
     private ProfileSignUpServiceProxy profileSignUpService;
-    
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Profile profile = profileSignUpService.getCurrentProfile();
-        req.setAttribute("profile", new ProfileForm(profile));
-        forwardToPage("sign-up", req, resp);
+    protected Class<?>[] getValidationGroups() {
+        return new Class<?>[] {SignUpGroup.class};
+    }
+
+    @Override
+    protected String getBackToEditView() {
+        return "sign-up";
+    }
+
+    @Override
+    protected Profile getCurrentProfile() {
+        return profileSignUpService.getCurrentProfile();
+    }
+
+    @Override
+    protected void saveProfile(Profile profile) {
+        profileSignUpService.completeSignUp();
+        reloginWithUserRole(profile);
+    }
+
+    private void reloginWithUserRole(Profile profile) {
+        //TODO 
     }
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.ejb.service.bean;
 
 import java.io.Serializable;
@@ -28,21 +27,24 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
+import static net.devstudy.myphotos.common.config.Constants.DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS;
+import net.devstudy.myphotos.ejb.model.URLImageResource;
 import net.devstudy.myphotos.exception.ObjectNotFoundException;
+import net.devstudy.myphotos.model.AsyncOperation;
 import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.service.ProfileService;
 import net.devstudy.myphotos.service.ProfileSignUpService;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @Stateful
 @StatefulTimeout(value = 30, unit = MINUTES)
-public class ProfileSignUpServiceBean implements ProfileSignUpService, Serializable{
-    
+public class ProfileSignUpServiceBean implements ProfileSignUpService, Serializable {
+
     @Inject
     private transient Logger logger;
 
@@ -69,6 +71,25 @@ public class ProfileSignUpServiceBean implements ProfileSignUpService, Serializa
     @Remove
     public void completeSignUp() {
         profileService.signUp(profile, false);
+        if (profile.getAvatarUrl() != null) {
+            profileService.uploadNewAvatar(profile, new URLImageResource(profile.getAvatarUrl()), new AsyncOperation<Profile>() {
+
+                @Override
+                public void onSuccess(Profile result) {
+                    logger.log(Level.INFO, "Profile avatar successful saved to {0}", result.getAvatarUrl());
+                }
+
+                @Override
+                public void onFailed(Throwable throwable) {
+                    logger.log(Level.SEVERE, "Profile avatar can't saved: " + throwable.getMessage(), throwable);
+                }
+
+                @Override
+                public long getTimeOutInMillis() {
+                    return DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS;
+                }
+            });
+        }
     }
 
     @Override

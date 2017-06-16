@@ -38,22 +38,21 @@
             <input type="hidden" name="avatarUrl" value="${profile.avatarUrl}" />
             <div class="row uniform 50%">
                 <div class="${'6u 12u$(xsmall)'}">
-                    <input type="text" name="firstName" value="${profile.firstName}" placeholder="Your first name" />
+                    <tags:input-text name="firstName" value="${profile.firstName}" placeholder="Your first name" bindId="firstName" />
                 </div>
                 <div class="${'6u$ 12u$(xsmall)'}">
-                    <input type="text" name="lastName"  value="${profile.lastName}" placeholder="Your last name"  />
+                    <tags:input-text name="lastName"  value="${profile.lastName}" placeholder="Your last name" bindId="lastName" />
                 </div>
                 <div class="${'6u 12u$(xsmall)'}">
-                    <input type="text" name="jobTitle"  value="${profile.jobTitle}" placeholder="Your job title" />
+                    <tags:input-text name="jobTitle"  value="${profile.jobTitle}" placeholder="Your job title" bindId="jobTitle" />
                 </div>
                 <div class="${'6u$ 12u$(xsmall)'}">
-                    <input type="text" name="location"  value="${profile.location}" placeholder="Where are you from" />
+                    <tags:input-text name="location"  value="${profile.location}" placeholder="Where are you from" bindId="location" />
                 </div>
                 <c:if test="${isAgreeCheckBoxAvailable}">
                     <div class="${'12u$'}">
                         <c:set var="label">I agree to the <a href="/terms">terms of service</a></c:set>
-                        <input type="checkbox" name="agree" id="agree" ${value ? 'checked' : ''}>
-                        <label for="agree">${label}</label>
+                        <tags:input-checkbox label="${label}" name="agree" value="${profile.agree}" />
                     </div>
                 </c:if>
                 <div class="${'12u$'}">
