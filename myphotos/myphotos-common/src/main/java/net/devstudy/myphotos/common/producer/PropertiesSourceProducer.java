@@ -17,6 +17,7 @@
 package net.devstudy.myphotos.common.producer;
 
 import java.util.Properties;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import net.devstudy.myphotos.common.annotation.cdi.PropertiesSource;
@@ -27,6 +28,7 @@ import net.devstudy.myphotos.common.annotation.cdi.PropertiesSource;
  * @author devstudy
  * @see http://devstudy.net
  */
+@Dependent
 public class PropertiesSourceProducer extends AbstractPropertiesLoader {
 
     @Produces

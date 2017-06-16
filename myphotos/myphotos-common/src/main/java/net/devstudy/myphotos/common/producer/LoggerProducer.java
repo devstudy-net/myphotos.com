@@ -17,6 +17,7 @@
 package net.devstudy.myphotos.common.producer;
 
 import java.util.logging.Logger;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
@@ -26,6 +27,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
  * @author devstudy
  * @see http://devstudy.net
  */
+@Dependent
 public class LoggerProducer {
 
     @Produces

@@ -16,6 +16,7 @@
 
 package net.devstudy.myphotos.common.producer;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
@@ -28,6 +29,7 @@ import net.devstudy.myphotos.exception.ConfigException;
  * @author devstudy
  * @see http://devstudy.net
  */
+@Dependent
 public class PropertyProducer {
 
     @Inject

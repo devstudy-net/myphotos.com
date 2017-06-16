@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.common.resource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import javax.enterprise.inject.Vetoed;
+package net.devstudy.myphotos.common.config;
+
+import java.util.concurrent.TimeUnit;
 
 /**
- *
- *
+ * 
+ * 
  * @author devstudy
  * @see http://devstudy.net
  */
-@Vetoed
-public interface ResourceLoader {
+public final class Constants {
 
-    boolean isSupport(String resourceName);
+    public static final long MAX_UPLOADED_PHOTO_SIZE_IN_BYTES = 10 * 1024 * 1024; // 10 Mb
+    
+    public static final long DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS = TimeUnit.SECONDS.toMillis(30);
 
-    InputStream getInputStream(String resourceName) throws IOException;
+    private Constants(){}
 }

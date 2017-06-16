@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.inject.Vetoed;
 import javax.inject.Inject;
 import net.devstudy.myphotos.common.resource.ResourceLoaderManager;
 
@@ -29,6 +30,7 @@ import net.devstudy.myphotos.common.resource.ResourceLoaderManager;
  * @author devstudy
  * @see http://devstudy.net
  */
+@Vetoed
 abstract class AbstractPropertiesLoader {
 
     @Inject
