@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy;
-
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+package net.devstudy.myphotos.model;
 
 /**
  *
- * @author martin
+ *
+ * @author devstudy
+ * @see http://devstudy.net
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
+public interface AsyncOperation<T> {
 
-    public void businessMethod() {
-    }
+    long getTimeOutInMillis();
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    void onSuccess(T result);
 
+    void onFailed(Throwable throwable);
 }

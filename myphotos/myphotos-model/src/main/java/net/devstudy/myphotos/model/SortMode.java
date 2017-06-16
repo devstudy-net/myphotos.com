@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy;
+package net.devstudy.myphotos.model;
 
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+import net.devstudy.myphotos.exception.ValidationException;
 
 /**
- *
- * @author martin
+ * 
+ * 
+ * @author devstudy
+ * @see http://devstudy.net
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
+public enum SortMode {
 
-    public void businessMethod() {
+    POPULAR_PHOTO,
+    
+    POPULAR_AUTHOR;
+    
+    public static SortMode of(String name) {
+        for(SortMode sortMode : SortMode.values()) {
+            if(sortMode.name().equalsIgnoreCase(name)) {
+                return sortMode;
+            }
+        }
+        throw new ValidationException("Undefined sort mode: "+String.valueOf(name).toUpperCase());
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
 }

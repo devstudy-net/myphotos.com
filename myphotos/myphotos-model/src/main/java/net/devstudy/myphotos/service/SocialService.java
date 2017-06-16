@@ -13,23 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy;
+package net.devstudy.myphotos.service;
 
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+import net.devstudy.myphotos.exception.RetrieveSocialDataFailedException;
+import net.devstudy.myphotos.model.domain.Profile;
 
 /**
- *
- * @author martin
+ * 
+ * 
+ * @author devstudy
+ * @see http://devstudy.net
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
+public interface SocialService {
 
-    public void businessMethod() {
+    Profile fetchProfile(String code) throws RetrieveSocialDataFailedException;
+    
+    String getClientId();
+    
+    default String getAuthorizeUrl() {
+        throw new UnsupportedOperationException();
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
 }

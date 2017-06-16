@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy;
+package net.devstudy.myphotos.model;
 
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+import javax.validation.Path;
 
 /**
- *
- * @author martin
+ * 
+ * 
+ * @author devstudy
+ * @see http://devstudy.net
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
+public interface ImageResource extends AutoCloseable{
 
-    public void businessMethod() {
-    }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+    Path getTempPath();
+    
+    @Override
+    void close();
 }

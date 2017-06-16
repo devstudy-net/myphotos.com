@@ -13,23 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy;
-
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+package net.devstudy.myphotos.exception;
 
 /**
- *
- * @author martin
+ * 
+ * 
+ * @author devstudy
+ * @see http://devstudy.net
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
+public class AccessForbiddenException extends BusinessException{
 
-    public void businessMethod() {
+    public AccessForbiddenException(String message) {
+        super(message);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
 }
