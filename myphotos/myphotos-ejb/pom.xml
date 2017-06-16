@@ -83,6 +83,12 @@ limitations under the License.
             <artifactId>google-api-client</artifactId>
             <version>1.22.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.moparisthebest</groupId>
+            <artifactId>junidecode</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

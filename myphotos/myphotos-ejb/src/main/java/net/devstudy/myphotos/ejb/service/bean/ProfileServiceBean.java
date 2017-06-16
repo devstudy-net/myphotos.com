@@ -16,6 +16,7 @@
 
 package net.devstudy.myphotos.ejb.service.bean;
 
+import java.util.List;
 import java.util.Optional;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
@@ -30,6 +31,8 @@ import net.devstudy.myphotos.common.annotation.cdi.Property;
 import net.devstudy.myphotos.common.config.ImageCategory;
 import net.devstudy.myphotos.ejb.repository.ProfileRepository;
 import net.devstudy.myphotos.ejb.service.ImageStorageService;
+import net.devstudy.myphotos.ejb.service.TranslitConverter;
+import net.devstudy.myphotos.ejb.service.impl.ProfileUidServiceManager;
 import net.devstudy.myphotos.ejb.service.interceptor.AsyncOperationInterceptor;
 import net.devstudy.myphotos.exception.ObjectNotFoundException;
 import net.devstudy.myphotos.model.AsyncOperation;
@@ -60,6 +63,12 @@ public class ProfileServiceBean implements ProfileService{
     
     @Inject
     private ImageStorageService imageStorageService;
+    
+    @Inject
+    private ProfileUidServiceManager profileUidServiceManager;
+    
+    @Inject
+    private TranslitConverter translitConverter;
 
     @Override
     public Profile findById(Long id) throws ObjectNotFoundException {
@@ -86,12 +95,31 @@ public class ProfileServiceBean implements ProfileService{
 
     @Override
     public void signUp(Profile profile, boolean uploadProfileAvatar) {
+        if(profile.getUid() == null) {
+            setProfileUid(profile);
+        }
         profileRepository.create(profile);
+    }
+    
+    private void setProfileUid(Profile profile) {
+        List<String> uids = profileUidServiceManager.getProfileUidCandidates(profile.getFirstName(), profile.getLastName());
+        List<String> existUids = profileRepository.findUids(uids);
+        for (String uid : uids) {
+            if (!existUids.contains(uid)) {
+                profile.setUid(uid);
+                return;
+            }
+        }
+
+        profile.setUid(profileUidServiceManager.getDefaultUid());
     }
 
     @Override
     public void translitSocialProfile(Profile profile) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        profile.setFirstName(profile.getFirstName() != null ? translitConverter.translit(profile.getFirstName()) : null);
+        profile.setLastName(profile.getLastName() != null ? translitConverter.translit(profile.getLastName()) : null);
+        profile.setJobTitle(profile.getJobTitle() != null ? translitConverter.translit(profile.getJobTitle()) : null);
+        profile.setLocation(profile.getLocation() != null ? translitConverter.translit(profile.getLocation()) : null);
     }
 
     @Override
