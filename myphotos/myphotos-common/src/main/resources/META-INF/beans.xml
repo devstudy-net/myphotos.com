@@ -21,7 +21,8 @@ limitations under the License.
        bean-discovery-mode="all" version="1.1">  
     <scan>
         <exclude name="net.devstudy.myphotos.common.config.*" />
-        <exclude name="net.devstudy.myphotos.common.converter.*" />
+        <exclude name="net.devstudy.myphotos.common.converter.ModelConverter" />
+        <exclude name="net.devstudy.myphotos.common.converter.UrlConveter" />
         <exclude name="net.devstudy.myphotos.common.model.*" />
     </scan>
 </beans>
