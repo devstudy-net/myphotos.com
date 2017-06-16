@@ -9,6 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <netbeans.hint.license>apache20</netbeans.hint.license>
     </properties>
     
     <dependencies>
@@ -27,6 +28,23 @@
             <groupId>org.apache.tomee</groupId>
             <artifactId>tomee-embedded</artifactId>
             <version>7.0.3</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.devstudy</groupId>
+            <artifactId>myphotos-model</artifactId>
+            <version>1.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.devstudy</groupId>
+            <artifactId>myphotos-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.devstudy</groupId>
+            <artifactId>myphotos-ejb</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
     
