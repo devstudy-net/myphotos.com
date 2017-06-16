@@ -13,7 +13,7 @@
         <br><br>
         <ul class="actions fit small">
             <li><a href="/sign-up/facebook" class="button facebook fit small icon fa-facebook">Facebook</a></li>
-            <li><a href="#" class="button google-plus fit small icon fa-google-plus">Google+</a></li>
+            <li><a data-sign-up="google-plus" class="button google-plus fit small icon fa-google-plus">Google+</a></li>
         </ul> 
     </div>
 </header>
