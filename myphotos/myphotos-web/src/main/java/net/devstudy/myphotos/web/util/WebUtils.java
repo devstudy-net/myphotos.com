@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.devstudy.myphotos.web.util;
 
-package net.devstudy.myphotos.web;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author devstudy
  * @see http://devstudy.net
  */
-public final class Constants {
+public class WebUtils {
 
-    public static final int PHOTO_LIMIT = 6;
-    
-    public static final String EMPTY_MESSAGE = "";
-    
-    public static final String DEFAULT_ERROR_MESSAGE = "Internal error";
-    
-    private Constants(){}
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+    }
 }

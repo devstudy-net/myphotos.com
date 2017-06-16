@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package net.devstudy.myphotos.web;
+package net.devstudy.myphotos.web.model;
 
 /**
- *
+ * 
+ * 
  * @author devstudy
  * @see http://devstudy.net
  */
-public final class Constants {
+public class ErrorModel {
+    private final int status;
+    private final String message;
 
-    public static final int PHOTO_LIMIT = 6;
-    
-    public static final String EMPTY_MESSAGE = "";
-    
-    public static final String DEFAULT_ERROR_MESSAGE = "Internal error";
-    
-    private Constants(){}
+    public ErrorModel(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }
