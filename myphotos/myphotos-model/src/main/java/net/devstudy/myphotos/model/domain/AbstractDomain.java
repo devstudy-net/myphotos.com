@@ -40,7 +40,7 @@ public abstract class AbstractDomain implements Serializable{
     @NotNull
     @Past
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 

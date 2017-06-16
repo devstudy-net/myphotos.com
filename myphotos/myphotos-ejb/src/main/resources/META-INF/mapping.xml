@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+http://www.datanucleus.org/products/accessplatform_3_3/jpa/metadata_xml.html
+-->
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+                                http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+                 version="2.1">
+    <entity class="net.devstudy.myphotos.model.domain.AccessToken">
+        <entity-listeners>
+            <entity-listener class="net.devstudy.myphotos.ejb.jpa.listener.AccessTokenLifeCycleManager">
+            </entity-listener>
+        </entity-listeners>
+    </entity>
+</entity-mappings>
