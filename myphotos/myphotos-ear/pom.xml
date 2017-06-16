@@ -64,13 +64,13 @@ limitations under the License.
                             <groupId>net.devstudy</groupId>
                             <bundleFileName>myphotos-rest.war</bundleFileName>
                             <contextRoot>/api</contextRoot>                         
-                        </webModule>
+                        </webModule-->
                         <webModule>
                             <artifactId>myphotos-ws</artifactId>
                             <groupId>net.devstudy</groupId>
                             <bundleFileName>myphotos-ws.war</bundleFileName>
                             <contextRoot>/ws</contextRoot>                         
-                        </webModule-->
+                        </webModule>
                     </modules>
                 </configuration>
             </plugin>
@@ -104,12 +104,12 @@ limitations under the License.
             <artifactId>myphotos-rest</artifactId>
             <version>1.0</version>
             <type>war</type>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>net.devstudy</groupId>
             <artifactId>myphotos-ws</artifactId>
             <version>1.0</version>
             <type>war</type>
-        </dependency-->
+        </dependency>
     </dependencies>
 </project>
