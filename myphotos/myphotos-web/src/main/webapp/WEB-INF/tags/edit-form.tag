@@ -18,7 +18,7 @@
 
 <header id="header">
     <div class="inner">
-        <a id="${isUploadAvatarAvailable ? 'avatar-uploader' : 'sign-up-avatar'} " class="image avatar">
+        <a id="${isUploadAvatarAvailable ? 'avatar-uploader' : 'sign-up-avatar'}" class="image avatar">
             <img src="${profile.avatarUrl}" alt="${profile.fullName}" />
         </a>
         <h1><strong id="firstName">${profile.firstName}</strong> <strong id="lastName">${profile.lastName}</strong></h1>

@@ -57,6 +57,13 @@ public class RoutingUtils {
             redirectToUrl("/" + SecurityUtils.getCurrentProfile().getUid(), request, response);
         }
     }
+    /*
+    Based on recommendations: https://docs.fineuploader.com/endpoint_handlers/traditional.html#response
+    */
+    public static void sendFileUploaderJson(JsonObject json, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        sendJson("text/plain", json, request, response);
+    }
+    
     
     private static void sendJson(String contentType, JsonObject json, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String content = json.toString();
