@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.devstudy</groupId>
+    <artifactId>myphotos</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>myphotos</name>
+    <modules>
+        <module>myphotos-model</module>
+        <module>myphotos-common</module>
+        <module>myphotos-ejb</module>
+        <module>myphotos-web</module>
+        <!--module>myphotos-rest</module>
+        <module>myphotos-ws</module-->
+        <module>myphotos-ear</module>
+    </modules>
+</project>
