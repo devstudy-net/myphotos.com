@@ -12,7 +12,7 @@
         <h1><strong>To get personal page please signup with</strong></h1>
         <br><br>
         <ul class="actions fit small">
-            <li><a href="#" class="button facebook fit small icon fa-facebook">Facebook</a></li>
+            <li><a href="/sign-up/facebook" class="button facebook fit small icon fa-facebook">Facebook</a></li>
             <li><a href="#" class="button google-plus fit small icon fa-google-plus">Google+</a></li>
         </ul> 
     </div>

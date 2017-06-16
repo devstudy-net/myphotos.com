@@ -73,6 +73,11 @@ limitations under the License.
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
         </dependency>
+        <dependency>
+            <groupId>com.restfb</groupId>
+            <artifactId>restfb</artifactId>
+            <version>1.38.0</version>
+        </dependency>
     </dependencies>
 
     <build>
