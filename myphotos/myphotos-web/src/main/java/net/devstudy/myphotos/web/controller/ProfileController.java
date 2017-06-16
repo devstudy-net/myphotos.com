@@ -34,7 +34,9 @@ import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.service.PhotoService;
 import net.devstudy.myphotos.service.ProfileService;
 import static net.devstudy.myphotos.web.Constants.PHOTO_LIMIT;
+import net.devstudy.myphotos.web.security.SecurityUtils;
 import static net.devstudy.myphotos.web.util.RoutingUtils.forwardToPage;
+import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToUrl;
 
 /**
  * 
@@ -61,7 +63,11 @@ public class ProfileController extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (isHomeUrl(url)) {
-            handleHomeRequest(req, resp);
+            if(SecurityUtils.isTempAuthenticated()) {
+                redirectToUrl("/sign-up", req, resp);
+            } else {
+                handleHomeRequest(req, resp);
+            }
         } else {
             handleProfileRequest(req, resp);
         }

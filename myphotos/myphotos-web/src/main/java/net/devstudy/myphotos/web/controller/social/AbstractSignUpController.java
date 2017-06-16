@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.web.controller.social;
 
 import java.io.IOException;
@@ -28,33 +27,39 @@ import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.service.ProfileService;
 import net.devstudy.myphotos.service.SocialService;
 import net.devstudy.myphotos.web.component.ProfileSignUpServiceProxy;
+import net.devstudy.myphotos.web.security.SecurityUtils;
 import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToUrl;
+import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToValidAuthUrl;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
-public abstract class AbstractSignUpController extends HttpServlet{
+public abstract class AbstractSignUpController extends HttpServlet {
 
     @EJB
     protected ProfileService profileService;
 
     @Inject
     protected ProfileSignUpServiceProxy profileSignUpService;
-    
+
     protected SocialService socialService;
-    
+
     protected abstract void setSocialService(SocialService socialService);
-    
+
     @Override
     protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Optional<String> code = Optional.ofNullable(req.getParameter("code"));
-        if (code.isPresent()) {
-            processSignUp(code.get(), req, resp);
+        if (SecurityUtils.isAuthenticated()) {
+            redirectToValidAuthUrl(req, resp);
         } else {
-            redirectToUrl("/", req, resp);
+            Optional<String> code = Optional.ofNullable(req.getParameter("code"));
+            if (code.isPresent()) {
+                processSignUp(code.get(), req, resp);
+            } else {
+                redirectToUrl("/", req, resp);
+            }
         }
     }
 
@@ -63,13 +68,12 @@ public abstract class AbstractSignUpController extends HttpServlet{
         Optional<Profile> profileOptional = profileService.findByEmail(signUpProfile.getEmail());
         if (profileOptional.isPresent()) {
             Profile profile = profileOptional.get();
-            //TODO Authentificate
+            SecurityUtils.authentificate(profile);
             redirectToUrl("/" + profile.getUid(), req, resp);
         } else {
-            //TODO Authentificate
+            SecurityUtils.authentificate();
             profileSignUpService.createSignUpProfile(signUpProfile);
             redirectToUrl("/sign-up", req, resp);
         }
     }
 }
-

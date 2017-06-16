@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.web.controller.social;
 
 import java.io.IOException;
@@ -25,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.devstudy.myphotos.common.annotation.qualifier.Facebook;
 import net.devstudy.myphotos.service.SocialService;
+import net.devstudy.myphotos.web.security.SecurityUtils;
 import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToUrl;
+import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToValidAuthUrl;
 
 /**
  *
@@ -35,13 +36,17 @@ import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToUrl;
  */
 @WebServlet(urlPatterns = "/sign-up/facebook", loadOnStartup = 1)
 public class SignUpViaFacebookController extends HttpServlet {
-    
+
     @Inject
     @Facebook
     private SocialService socialService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        redirectToUrl(socialService.getAuthorizeUrl(), req, resp);
+        if (SecurityUtils.isAuthenticated()) {
+            redirectToValidAuthUrl(req, resp);
+        } else {
+            redirectToUrl(socialService.getAuthorizeUrl(), req, resp);
+        }
     }
 }

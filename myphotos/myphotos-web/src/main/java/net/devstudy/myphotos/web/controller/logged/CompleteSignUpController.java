@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.web.component.ProfileSignUpServiceProxy;
 import net.devstudy.myphotos.common.annotation.group.SignUpGroup;
+import net.devstudy.myphotos.web.security.SecurityUtils;
 
 /**
  *
@@ -57,6 +58,7 @@ public class CompleteSignUpController extends AbstractProfileSaveController {
     }
 
     private void reloginWithUserRole(Profile profile) {
-        //TODO 
+        SecurityUtils.logout();
+        SecurityUtils.authentificate(profile);
     }
 }

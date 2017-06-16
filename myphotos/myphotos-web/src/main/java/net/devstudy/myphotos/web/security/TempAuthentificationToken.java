@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package net.devstudy.myphotos.web.controller.logged;
+package net.devstudy.myphotos.web.security;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import net.devstudy.myphotos.web.util.RoutingUtils;
+import static net.devstudy.myphotos.web.security.SecurityUtils.TEMP_PASS;
+import org.apache.shiro.authc.AuthenticationToken;
+import static net.devstudy.myphotos.web.security.SecurityUtils.TEMP_PROFILE;
 
 /**
  * 
@@ -30,12 +26,16 @@ import net.devstudy.myphotos.web.util.RoutingUtils;
  * @author devstudy
  * @see http://devstudy.net
  */
-@WebServlet("/sign-out")
-public class SignOutController extends HttpServlet{
+public class TempAuthentificationToken implements AuthenticationToken {
+	private static final long serialVersionUID = -3307991499732406972L;
+
+	@Override
+    public Object getPrincipal() {
+        return TEMP_PROFILE;
+    }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().invalidate();
-        RoutingUtils.redirectToUrl("/", req, resp);
+    public Object getCredentials() {
+        return TEMP_PASS;
     }
 }
