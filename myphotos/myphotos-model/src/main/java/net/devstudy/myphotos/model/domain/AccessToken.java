@@ -15,12 +15,50 @@
  */
 package net.devstudy.myphotos.model.domain;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
-public class AccessToken{
+@Entity
+@Table(name = "access_token", schema = "public")
+public class AccessToken extends AbstractDomain {
 
+    @Id
+    @Basic(optional = false)
+    @Column(unique = true, nullable = false)
+    @NotNull
+    private String token;
+
+    @NotNull
+    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Profile profile;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 }
