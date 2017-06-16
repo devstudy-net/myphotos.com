@@ -46,6 +46,12 @@
             <artifactId>myphotos-ejb</artifactId>
             <version>1.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.1</version>
+        </dependency>
     </dependencies>
     
     <build>

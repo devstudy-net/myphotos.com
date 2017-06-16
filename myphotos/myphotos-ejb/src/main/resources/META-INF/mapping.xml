@@ -7,6 +7,13 @@ http://www.datanucleus.org/products/accessplatform_3_3/jpa/metadata_xml.html
                  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
                                 http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
                  version="2.1">
+    <mapped-superclass class="net.devstudy.myphotos.model.domain.AbstractDomain">
+        <entity-listeners>
+            <entity-listener class="net.devstudy.myphotos.ejb.jpa.listener.CreatedNowListener">
+            </entity-listener>
+        </entity-listeners>
+    </mapped-superclass>
+    
     <entity class="net.devstudy.myphotos.model.domain.AccessToken">
         <entity-listeners>
             <entity-listener class="net.devstudy.myphotos.ejb.jpa.listener.AccessTokenLifeCycleManager">

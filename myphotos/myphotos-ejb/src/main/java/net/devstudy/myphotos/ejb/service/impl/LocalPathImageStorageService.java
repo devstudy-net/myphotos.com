@@ -59,7 +59,7 @@ public class LocalPathImageStorageService implements ImageStorageService {
     @Override
     public String saveProtectedImage(Path path) {
         String fileName = fileNameGeneratorService.generateUniqueFileName();
-        Path destinationPath = Paths.get(storageRoot + fileName);
+        Path destinationPath = Paths.get(storageRoot, fileName);
         saveImage(path, destinationPath);
         return fileName;
     }
@@ -67,7 +67,7 @@ public class LocalPathImageStorageService implements ImageStorageService {
     @Override
     public String savePublicImage(ImageCategory imageCategory, Path path) {
         String fileName = fileNameGeneratorService.generateUniqueFileName();
-        Path destinationPath = Paths.get(mediaRoot + imageCategory.getRelativeRoot() + fileName);
+        Path destinationPath = Paths.get(mediaRoot, imageCategory.getRelativeRoot(), fileName);
         saveImage(path, destinationPath);
         return "/" + imageCategory.getRelativeRoot() + fileName;
     }
@@ -93,7 +93,7 @@ public class LocalPathImageStorageService implements ImageStorageService {
     
     @Override
     public void deletePublicImage(String url) {
-        Path destinationPath = Paths.get(mediaRoot + url.substring(1));
+        Path destinationPath = Paths.get(mediaRoot, url.substring(1));
         try {
             Files.deleteIfExists(destinationPath);
         } catch (IOException | RuntimeException e) {
@@ -103,7 +103,7 @@ public class LocalPathImageStorageService implements ImageStorageService {
     
     @Override
     public OriginalImage getOriginalImage(String originalUrl) {
-    	Path originalPath = Paths.get(storageRoot + originalUrl);
+    	Path originalPath = Paths.get(storageRoot, originalUrl);
     	try {
             return new OriginalImage(
                     Files.newInputStream(originalPath),

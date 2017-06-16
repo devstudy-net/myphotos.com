@@ -40,7 +40,7 @@ public abstract class AbstractDomain implements Serializable{
     @NotNull
     @Past
     @Basic(optional = false)
-    @Column(nullable = false, insertable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
@@ -50,16 +50,6 @@ public abstract class AbstractDomain implements Serializable{
 
     public void setCreated(Date created) {
         this.created = created;
-    }
-
-    @Override
-    public int hashCode() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

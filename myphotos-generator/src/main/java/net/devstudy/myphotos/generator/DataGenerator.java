@@ -22,19 +22,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import net.devstudy.myphotos.common.annotation.cdi.Property;
 import net.devstudy.myphotos.common.config.ImageCategory;
+import net.devstudy.myphotos.common.model.TempImageResource;
+import net.devstudy.myphotos.ejb.service.bean.PhotoServiceBean;
+import net.devstudy.myphotos.ejb.service.bean.ProfileServiceBean;
 import net.devstudy.myphotos.generator.component.AbstractEnvironmentGenerator;
 import net.devstudy.myphotos.generator.component.PhotoGenerator;
 import net.devstudy.myphotos.generator.component.ProfileGenerator;
+import net.devstudy.myphotos.generator.component.UpdatePhotoService;
+import net.devstudy.myphotos.model.domain.Photo;
 import net.devstudy.myphotos.model.domain.Profile;
 
 /**
@@ -50,6 +59,15 @@ public class DataGenerator extends AbstractEnvironmentGenerator{
 
     @Inject
     private PhotoGenerator photoGenerator;
+    
+    @Inject
+    private UpdatePhotoService updatePhotoService;
+    
+    @EJB
+    private ProfileServiceBean profileServiceBean;
+
+    @EJB
+    private PhotoServiceBean photoServiceBean;
     
     @Resource(mappedName = "MyPhotosDBPool")
     private DataSource dataSource;
@@ -70,8 +88,20 @@ public class DataGenerator extends AbstractEnvironmentGenerator{
     protected void generate() throws Exception {
         clearExternalResources();
         List<Profile> profiles = profileGenerator.generateProfiles();
-        //TODO craete profiles
+        List<Photo> uploadedPhotos = new ArrayList<>();
+        for (Profile profile : profiles) {
+            profileServiceBean.signUp(profile, false);
+            profileServiceBean.uploadNewAvatar(profile, new PathImageResource(profile.getAvatarUrl()));
+            List<String> photoPaths = photoGenerator.generatePhotos(profile.getPhotoCount());
+            for (String path : photoPaths) {
+                Profile dbProfile = profileServiceBean.findById(profile.getId());
+                uploadedPhotos.add(photoServiceBean.uploadNewPhoto(dbProfile, new PathImageResource(path)));
+            }
+        }
+        updatePhotoService.updatePhotos(uploadedPhotos);
+        updateProfileRating();
         System.out.println("Generated " + profiles.size() + " profiles");
+        System.out.println("Generated " + uploadedPhotos.size() + " photos");
     }
     
     private void clearExternalResources() throws SQLException, IOException {
@@ -109,5 +139,26 @@ public class DataGenerator extends AbstractEnvironmentGenerator{
             Files.createDirectories(path);
         }
     }
+    
+    private void updateProfileRating() throws SQLException {
+        try (Connection c = dataSource.getConnection();
+                PreparedStatement ps = c.prepareStatement("SELECT update_rating()")) {
+            c.setAutoCommit(false);
+            ps.executeQuery();
+            c.commit();
+        }
+    }
 
+    /**
+     *
+     *
+     * @author devstudy
+     * @see http://devstudy.net
+     */
+    private static class PathImageResource extends TempImageResource {
+
+        public PathImageResource(String path) throws IOException {
+            Files.copy(Paths.get(path), getTempPath(), REPLACE_EXISTING);
+        }
+    }
 }
