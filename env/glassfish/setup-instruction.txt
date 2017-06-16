@@ -1,0 +1,23 @@
+1. Download jdbc driver: http://central.maven.org/maven2/org/postgresql/postgresql/42.1.1/postgresql-42.1.1.jar
+2. Copy driver to ${GLASSFISH_HOME}/glassfish/domains/domain1/lib/ext
+3. Open asadmin: ${GLASSFISH_HOME}/bin/asadmin
+4. Start server via asadmin: 
+start-domain --debug domain1
+5. Create jdbc connection pool
+create-jdbc-connection-pool --datasourceclassname org.postgresql.ds.PGConnectionPoolDataSource --restype javax.sql.ConnectionPoolDataSource --property portNumber=5432:password=password:user=myphotos:serverName=localhost:databaseName=myphotos MyPhotosDBPool
+6. Create jdbc resource
+create-jdbc-resource --connectionpoolid MyPhotosDBPool jdbc/MyPhotosDBPool
+7. Open browser and visit: http://localhost:4848 and verify resources
+8. Stop server:
+stop-domain domain1 
+
+FYI:
+JNDI name is jdbc/MyPhotosDBPool
+Connection settings for database are:
+portNumber=5432
+password=password
+user=myphotos
+serverName=localhost
+databaseName=myphotos
+
+If you want to use other settings, please change appropriate parameters for create-jdbc-connection-pool and create-jdbc-resource asadmin commands
