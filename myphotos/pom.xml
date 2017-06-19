@@ -27,7 +27,7 @@ limitations under the License.
         <module>myphotos-common</module>
         <module>myphotos-ejb</module>
         <module>myphotos-web</module>
-        <!--module>myphotos-rest</module-->
+        <module>myphotos-rest</module>
         <module>myphotos-ws</module>
         <module>myphotos-ear</module>
     </modules>
