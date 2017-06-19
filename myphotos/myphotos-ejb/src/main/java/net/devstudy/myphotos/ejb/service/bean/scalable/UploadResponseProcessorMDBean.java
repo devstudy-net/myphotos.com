@@ -106,7 +106,7 @@ public class UploadResponseProcessorMDBean implements MessageListener {
             asyncUploadImageManager.completeUploadNewPhotoSuccess(path, photo);
         } else {
             Profile profile = (Profile) message.getObject();
-            profileServiceBean.uploadNewAvatar(profileId, profile.getAvatarUrl());
+            profileServiceBean.saveNewAvatar(profileId, profile.getAvatarUrl());
             asyncUploadImageManager.completeUploadNewAvatarSuccess(path, profile);
         }
     }

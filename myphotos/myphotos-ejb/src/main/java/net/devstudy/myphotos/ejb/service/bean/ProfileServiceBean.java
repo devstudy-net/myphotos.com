@@ -167,10 +167,10 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
     
     public void uploadNewAvatar(Profile currentProfile, ImageResource imageResource) {
         String avatarUrl = imageProcessorBean.processProfileAvatar(imageResource);
-        uploadNewAvatar(currentProfile, avatarUrl);
+        ProfileServiceBean.this.saveNewAvatar(currentProfile, avatarUrl);
     }
     
-    private void uploadNewAvatar(Profile currentProfile, String avatarUrl) {
+    private void saveNewAvatar(Profile currentProfile, String avatarUrl) {
         if (ImageCategory.isImageCategoryUrl(currentProfile.getAvatarUrl())) {
             imageStorageService.deletePublicImage(currentProfile.getAvatarUrl());
         }
@@ -178,19 +178,18 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
         profileRepository.update(currentProfile);
     }
     
-    public void uploadNewAvatar(Long profileId, String avatarUrl) {
-        uploadNewAvatar(profileRepository.findById(profileId).get(), avatarUrl);
+    public void saveNewAvatar(Long profileId, String avatarUrl) {
+        ProfileServiceBean.this.saveNewAvatar(profileRepository.findById(profileId).get(), avatarUrl);
     }
     
     public void setAvatarPlaceHolder(Long profileId) {
         setAvatarPlaceHolder(profileRepository.findById(profileId).get());
     }
 
-    public void setAvatarPlaceHolder(Profile currentProfile) {
+    private void setAvatarPlaceHolder(Profile currentProfile) {
         if (currentProfile.getAvatarUrl() == null) {
             currentProfile.setAvatarUrl(avatarPlaceHolderUrl);
             profileRepository.update(currentProfile);
         }
     }
-
 }
