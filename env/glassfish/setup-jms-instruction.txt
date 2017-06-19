@@ -1,0 +1,10 @@
+1. Start server via asadmin: 
+start-domain --debug domain1
+2. Create jms connection factory
+create-jms-resource --restype javax.jms.ConnectionFactory --property ClientId=MyPhotos jms/myphotos/JMSConnectionFactory
+3. Create jms queues
+create-jms-resource --restype javax.jms.Queue --property Name=UploadRequestQueue jms/myphotos/UploadRequestQueue
+create-jms-resource --restype javax.jms.Queue --property Name=UploadResponseQueue jms/myphotos/UploadResponseQueue
+4. Open browser and visit: http://localhost:4848 and verify jms resources
+5. Stop server:
+stop-domain domain1 

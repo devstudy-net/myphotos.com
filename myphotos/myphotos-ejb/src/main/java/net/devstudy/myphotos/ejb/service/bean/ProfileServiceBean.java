@@ -34,6 +34,7 @@ import net.devstudy.myphotos.ejb.model.URLImageResource;
 import net.devstudy.myphotos.ejb.repository.ProfileRepository;
 import net.devstudy.myphotos.ejb.service.ImageStorageService;
 import net.devstudy.myphotos.ejb.service.TranslitConverter;
+import net.devstudy.myphotos.ejb.service.bean.scalable.AsyncUploadImageManager;
 import net.devstudy.myphotos.ejb.service.impl.ProfileUidServiceManager;
 import net.devstudy.myphotos.ejb.service.interceptor.AsyncOperationInterceptor;
 import net.devstudy.myphotos.exception.ObjectNotFoundException;
@@ -77,6 +78,8 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
     @Inject
     private ModelConverter modelConverter;
     
+    @EJB
+    private AsyncUploadImageManager asyncUploadImageManager;
 
     @Override
     public Profile findById(Long id) throws ObjectNotFoundException {
@@ -144,7 +147,7 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
         profileRepository.update(profile);
     }
 
-    @Override
+    /*@Override
     @Asynchronous
     @Interceptors(AsyncOperationInterceptor.class)
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -156,15 +159,27 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
             setAvatarPlaceHolder(currentProfile);
             asyncOperation.onFailed(throwable);
         }
-    }
+    }*/
+    
+    public void uploadNewAvatar(Profile currentProfile, ImageResource imageResource, AsyncOperation<Profile> asyncOperation) {
+        asyncUploadImageManager.uploadNewAvatar(currentProfile, imageResource, asyncOperation);
+    }   
     
     public void uploadNewAvatar(Profile currentProfile, ImageResource imageResource) {
         String avatarUrl = imageProcessorBean.processProfileAvatar(imageResource);
+        uploadNewAvatar(currentProfile, avatarUrl);
+    }
+    
+    private void uploadNewAvatar(Profile currentProfile, String avatarUrl) {
         if (ImageCategory.isImageCategoryUrl(currentProfile.getAvatarUrl())) {
             imageStorageService.deletePublicImage(currentProfile.getAvatarUrl());
         }
         currentProfile.setAvatarUrl(avatarUrl);
         profileRepository.update(currentProfile);
+    }
+    
+    public void uploadNewAvatar(Long profileId, String avatarUrl) {
+        uploadNewAvatar(profileRepository.findById(profileId).get(), avatarUrl);
     }
     
     public void setAvatarPlaceHolder(Long profileId) {

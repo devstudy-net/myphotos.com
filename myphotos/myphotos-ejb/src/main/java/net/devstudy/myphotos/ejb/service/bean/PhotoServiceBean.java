@@ -33,6 +33,7 @@ import javax.interceptor.Interceptors;
 import net.devstudy.myphotos.ejb.repository.PhotoRepository;
 import net.devstudy.myphotos.ejb.repository.ProfileRepository;
 import net.devstudy.myphotos.ejb.service.ImageStorageService;
+import net.devstudy.myphotos.ejb.service.bean.scalable.AsyncUploadImageManager;
 import net.devstudy.myphotos.ejb.service.interceptor.AsyncOperationInterceptor;
 import net.devstudy.myphotos.exception.ObjectNotFoundException;
 import net.devstudy.myphotos.exception.ValidationException;
@@ -70,6 +71,9 @@ public class PhotoServiceBean implements PhotoService {
     
     @Resource
     private SessionContext sessionContext;
+    
+    @EJB
+    private AsyncUploadImageManager asyncUploadImageManager;
 
     @Override
     public List<Photo> findProfilePhotos(Long profileId, Pageable pageable) {
@@ -118,7 +122,7 @@ public class PhotoServiceBean implements PhotoService {
         return imageStorageService.getOriginalImage(photo.getOriginalUrl());
     }
 
-    @Override
+    /*@Override
     @Asynchronous
     @Interceptors(AsyncOperationInterceptor.class)
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -130,15 +134,27 @@ public class PhotoServiceBean implements PhotoService {
             sessionContext.setRollbackOnly();
             asyncOperation.onFailed(throwable);
         }
+    }*/
+    
+    public void uploadNewPhoto(Profile currentProfile, ImageResource imageResource, AsyncOperation<Photo> asyncOperation) {
+        asyncUploadImageManager.uploadNewPhoto(currentProfile, imageResource, asyncOperation);
     }
 
     public Photo uploadNewPhoto(Profile currentProfile, ImageResource imageResource){
         Photo photo = imageProcessorBean.processPhoto(imageResource);
+        createNewPhoto(currentProfile, photo);
+        return photo;
+    }
+    
+    public void createNewPhoto(Long profileId, Photo photo){
+        createNewPhoto(profileRepository.findById(profileId).get(), photo);
+    }
+    
+    private void createNewPhoto(Profile currentProfile, Photo photo){
         photo.setProfile(currentProfile);
         photoRepository.create(photo);
         photoRepository.flush();
         currentProfile.setPhotoCount(photoRepository.countProfilePhotos(currentProfile.getId()));
         profileRepository.update(currentProfile);
-        return photo;
     }
 }
