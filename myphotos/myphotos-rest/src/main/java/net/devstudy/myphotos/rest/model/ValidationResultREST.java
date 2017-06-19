@@ -16,8 +16,9 @@
 
 package net.devstudy.myphotos.rest.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
@@ -25,9 +26,10 @@ import javax.xml.bind.annotation.XmlType;
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@ApiModel("ValidationResult")
 public class ValidationResultREST extends ErrorMessageREST{
     
+    @ApiModelProperty(required = true)
     private List<ValidationItemREST> items;
 
     public ValidationResultREST() {

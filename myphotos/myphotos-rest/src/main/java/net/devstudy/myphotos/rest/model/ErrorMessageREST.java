@@ -15,18 +15,21 @@
  */
 package net.devstudy.myphotos.rest.model;
 
-import javax.xml.bind.annotation.XmlType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  *
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@ApiModel("ErrorMessage")
 public class ErrorMessageREST {
 
+    @ApiModelProperty(required = true, value = "Error message. This message should be displayed to user if userError=true, otherwise it is message for developer")
     private String message;
     
+    @ApiModelProperty(required = true, value = "Category of error message. If userError=true, message should displayed to user, otherwise it is message for developer")
     private boolean userError;
 
     public ErrorMessageREST() {

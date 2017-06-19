@@ -16,6 +16,8 @@
 
 package net.devstudy.myphotos.rest.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -25,8 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  * @see http://devstudy.net
  */
 @XmlType(name="")
+@ApiModel("UploadPhotoResult")
 public class UploadPhotoResultREST extends ImageLinkREST{
 
+    @ApiModelProperty(required = true, value = "Photo id for uploaded photo")
     private Long id;
 
     public UploadPhotoResultREST(Long id, String url) {

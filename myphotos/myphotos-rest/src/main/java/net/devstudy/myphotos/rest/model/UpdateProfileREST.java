@@ -16,7 +16,8 @@
 
 package net.devstudy.myphotos.rest.model;
 
-import javax.xml.bind.annotation.XmlType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
@@ -24,7 +25,12 @@ import javax.xml.bind.annotation.XmlType;
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@ApiModel("UpdateProfile")
 public class UpdateProfileREST extends SignUpProfileREST{
 
+    @Override
+    @ApiModelProperty(hidden = true)
+    public String getCode() {
+        return super.getCode(); 
+    }
 }

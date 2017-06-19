@@ -15,9 +15,11 @@
  */
 package net.devstudy.myphotos.rest.model;
 
-import javax.xml.bind.annotation.XmlType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
 
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -25,20 +27,27 @@ import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@XmlType(name = "")
+@ApiModel("Profile")
 public class ProfileREST extends SimpleProfileREST{
 
+    @ApiModelProperty(required = true)
     private String firstName;
 
+    @ApiModelProperty(required = true)
     private String lastName;
 
     @ConvertAsURL
+    @ApiModelProperty(required = true)
     private String avatarUrl;
 
+    @ApiModelProperty(required = true)
     private String jobTitle;
 
+    @ApiModelProperty(required = true)
     private String location;
 
+    @ApiModelProperty(required = true)
     private int photoCount;
 
     public String getFirstName() {

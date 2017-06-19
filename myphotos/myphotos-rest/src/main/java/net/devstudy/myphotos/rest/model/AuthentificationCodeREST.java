@@ -15,7 +15,8 @@
  */
 package net.devstudy.myphotos.rest.model;
 
-import javax.xml.bind.annotation.XmlType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  *
@@ -23,10 +24,11 @@ import javax.xml.bind.annotation.XmlType;
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@ApiModel("AuthentificationCode")
 public class AuthentificationCodeREST {
     private String code;
 
+    @ApiModelProperty(required = true, value = "Authentification code retrieved from social service")
     public String getCode() {
         return code;
     }

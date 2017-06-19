@@ -15,9 +15,11 @@
  */
 package net.devstudy.myphotos.rest.model;
 
-import javax.xml.bind.annotation.XmlType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
 
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
@@ -26,14 +28,19 @@ import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
  * @see http://devstudy.net
  */
 @XmlType(name="")
+@ApiModel("ProfilePhoto")
 public class ProfilePhotoREST {
+    @ApiModelProperty(required = true, value = "Photo id. Uses as unique identificator for /preview and /download api")
     private Long id;
     
     @ConvertAsURL
+    @ApiModelProperty(required = true)
     private String smallUrl;
-
+    
+    @ApiModelProperty(required = true)
     private long views;
-
+    
+    @ApiModelProperty(required = true)
     private long downloads;
 
     public Long getId() {

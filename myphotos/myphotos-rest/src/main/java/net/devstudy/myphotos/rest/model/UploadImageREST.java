@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.rest.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import net.devstudy.myphotos.common.model.AbstractMimeTypeImageResource;
 import net.devstudy.myphotos.model.ImageResource;
+import net.devstudy.myphotos.common.model.AbstractMimeTypeImageResource;
 import org.apache.commons.fileupload.FileItem;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
+@ApiModel("UploadImage")
 public class UploadImageREST {
 
+    @ApiModelProperty(hidden = true)
     private final FileItem fileItem;
 
     public UploadImageREST(FileItem fileItem) {
         this.fileItem = fileItem;
     }
 
+    @ApiModelProperty(hidden = true)
     public ImageResource getImageResource() {
         return new FileItemImageResource();
     }
