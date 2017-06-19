@@ -84,6 +84,11 @@ limitations under the License.
         </dependency>
         <dependency>
             <groupId>net.devstudy</groupId>
+            <artifactId>myphotos-rmi</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.devstudy</groupId>
             <artifactId>myphotos-common</artifactId>
             <version>1.0</version>
         </dependency>

@@ -12,6 +12,8 @@
         <properties>
             <property name="eclipselink.logging.level.sql" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="true"/>
+            
+            <!--property name="eclipselink.weaving" value="false" /-->
       
             <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default" />
             <property name="javax.persistence.validation.group.pre-update"  value="javax.validation.groups.Default" />

@@ -61,6 +61,12 @@ limitations under the License.
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.devstudy</groupId>
+            <artifactId>myphotos-rmi</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
         
         <dependency>
             <groupId>net.devstudy</groupId>

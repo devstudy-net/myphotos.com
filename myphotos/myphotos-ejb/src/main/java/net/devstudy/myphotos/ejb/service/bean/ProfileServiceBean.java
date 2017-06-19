@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import net.devstudy.myphotos.common.annotation.cdi.Property;
 import net.devstudy.myphotos.common.config.ImageCategory;
+import net.devstudy.myphotos.common.converter.ModelConverter;
 import net.devstudy.myphotos.ejb.model.URLImageResource;
 import net.devstudy.myphotos.ejb.repository.ProfileRepository;
 import net.devstudy.myphotos.ejb.service.ImageStorageService;
@@ -39,6 +40,8 @@ import net.devstudy.myphotos.exception.ObjectNotFoundException;
 import net.devstudy.myphotos.model.AsyncOperation;
 import net.devstudy.myphotos.model.ImageResource;
 import net.devstudy.myphotos.model.domain.Profile;
+import net.devstudy.myphotos.rmi.model.RemoteProfile;
+import net.devstudy.myphotos.rmi.service.ProfileRemoteService;
 import net.devstudy.myphotos.service.ProfileService;
 
 /**
@@ -50,7 +53,7 @@ import net.devstudy.myphotos.service.ProfileService;
 @Stateless
 @LocalBean
 @Local(ProfileService.class)
-public class ProfileServiceBean implements ProfileService{
+public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
     
     @Inject
     @Property("myphotos.profile.avatar.placeholder.url")
@@ -70,6 +73,10 @@ public class ProfileServiceBean implements ProfileService{
     
     @Inject
     private TranslitConverter translitConverter;
+    
+    @Inject
+    private ModelConverter modelConverter;
+    
 
     @Override
     public Profile findById(Long id) throws ObjectNotFoundException {
@@ -78,6 +85,12 @@ public class ProfileServiceBean implements ProfileService{
             throw new ObjectNotFoundException(String.format("Profile not found by id: %s", id));
         }
         return profile.get();
+    }
+
+    @Override
+    public RemoteProfile findRemoteById(Long id) throws ObjectNotFoundException {
+        Profile profile = findById(id);
+        return modelConverter.convert(profile, RemoteProfile.class);
     }
 
     @Override

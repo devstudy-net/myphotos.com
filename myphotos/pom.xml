@@ -30,6 +30,7 @@ limitations under the License.
         <module>myphotos-rest</module>
         <module>myphotos-ws</module>
         <module>myphotos-ear</module>
+        <module>myphotos-rmi</module>
     </modules>
     <properties>
         <netbeans.hint.license>apache20</netbeans.hint.license>
