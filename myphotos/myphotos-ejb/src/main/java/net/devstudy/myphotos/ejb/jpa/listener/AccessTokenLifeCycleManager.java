@@ -19,7 +19,6 @@ package net.devstudy.myphotos.ejb.jpa.listener;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import net.devstudy.myphotos.exception.InvalidWorkFlowException;
@@ -33,8 +32,7 @@ import net.devstudy.myphotos.model.domain.AccessToken;
  */
 public class AccessTokenLifeCycleManager {
 
-    @Inject
-    private Logger logger;
+    private Logger logger = Logger.getLogger(AccessTokenLifeCycleManager.class.getName());
 
     @PrePersist
     public void setToken(AccessToken model) {

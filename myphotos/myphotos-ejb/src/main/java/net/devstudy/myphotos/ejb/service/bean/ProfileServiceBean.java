@@ -179,7 +179,7 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
     }
     
     public void saveNewAvatar(Long profileId, String avatarUrl) {
-        ProfileServiceBean.this.saveNewAvatar(profileRepository.findById(profileId).get(), avatarUrl);
+        saveNewAvatar(profileRepository.findById(profileId).get(), avatarUrl);
     }
     
     public void setAvatarPlaceHolder(Long profileId) {

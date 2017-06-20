@@ -2,7 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="net.devstudy.myphotos.pu" transaction-type="JTA">
-        <jta-data-source>jdbc/MyPhotosDBPool</jta-data-source>
+        <jta-data-source>java:/jdbc/MyPhotosDBPool</jta-data-source>
         <mapping-file>META-INF/mapping.xml</mapping-file>
         <class>net.devstudy.myphotos.model.domain.AbstractDomain</class>
         <class>net.devstudy.myphotos.model.domain.AccessToken</class>
@@ -10,13 +10,22 @@
         <class>net.devstudy.myphotos.model.domain.Profile</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
-            <property name="eclipselink.logging.level.sql" value="FINE"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
-            
-            <!--property name="eclipselink.weaving" value="false" /-->
-      
             <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default" />
             <property name="javax.persistence.validation.group.pre-update"  value="javax.validation.groups.Default" />
+            
+            <!-- openjpa properties (TomEE) -->
+            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
+            <property name="openjpa.ConnectionFactoryProperties" value="PrintParameters=true" />
+            
+            <!-- eclipselink properties (Glassfish) -->
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <!--property name="eclipselink.weaving" value="false" /-->
+            
+            <!-- hibernate properties (Wildfly) -->
+            <property name = "hibernate.show_sql" value = "true" />
+            <property name = "hibernate.format_sql" value = "true" />
+            <property name = "hibernate.use_sql_comments" value = "true" />
         </properties>
     </persistence-unit>
 </persistence>

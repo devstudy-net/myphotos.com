@@ -1,0 +1,60 @@
+1. Download server: http://download.jboss.org/wildfly/10.1.0.Final/wildfly-10.1.0.Final.zip
+2. Unzip into ${WILDFLY-HOME}
+3. Launch ${WILDFLY-HOME}/bin/add-user.bat and add user [admin/password]
+4. Start server: ${WILDFLY-HOME}/bin/standalone.bat --server-config=standalone-full.xml  or  ${WILDFLY-HOME}/start.cmd
+5. Download jdbc driver http://central.maven.org/maven2/org/postgresql/postgresql/42.1.1/postgresql-42.1.1.jar
+6. Copy driver to ${WILDFLY-HOME} directory
+7. Launch ${WILDFLY-HOME}/bin/jboss-cli.bat
+7.1 Connect to server:
+connect
+
+7.2 Create jdbc datasource:
+module add --name=org.postgresql.jdbc --resources=../postgresql-42.1.1.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgresql/:add(driver-name=postgresql, driver-module-name=org.postgresql.jdbc, driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+data-source add \
+    --name=MyPhotosDBPool \
+    --jndi-name=java:/jdbc/MyPhotosDBPool \
+    --use-java-context=true \
+    --use-ccm=true \
+    --connection-url=jdbc:postgresql://localhost:5432/myphotos \
+    --driver-name=postgresql \
+    --user-name=myphotos \
+    --password=password \
+    --initial-pool-size=5 \
+    --min-pool-size=5 \
+    --max-pool-size=15 \
+    --pool-prefill=true \
+    --check-valid-connection-sql="SELECT 1" \
+    --validate-on-match=true \
+    --background-validation=true
+	
+7.3 Verify result    
+/subsystem=datasources:installed-drivers-list
+
+7.4 Create JMS factory and queues:
+connection-factory add --name=MyPhotos --connectors=in-vm --entries=["java:/jms/myphotos/JMSConnectionFactory"]
+jms-queue add --queue-address=UploadRequestQueue --entries=["java:/jms/myphotos/UploadRequestQueue"]
+jms-queue add --queue-address=UploadResponseQueue --entries=["java:/jms/myphotos/UploadResponseQueue"] 
+
+7.5 Add logger for net.devstudy.myphotos category
+/subsystem=logging/logger=net.devstudy.myphotos:add
+/subsystem=logging/logger=net.devstudy.myphotos:write-attribute(name="level", value="FINE")
+/subsystem=logging/logger=net.devstudy.myphotos:write-attribute(name="use-parent-handlers", value="true")
+
+7.6 Add system property
+/system-property=MYPHOTOS_CONFIG_FILE:add(value="D:/devstudy.net/my-photos.properties")
+
+7.7 Verify system properties
+/core-service=platform-mbean/type=runtime:read-attribute(name=system-properties)
+
+7.8 Configure SOAP:
+/subsystem=webservices/:write-attribute(name=modify-wsdl-address,value=true)
+/subsystem=webservices/:write-attribute(name=wsdl-host,value=soap.myphotos.com)
+/subsystem=webservices/:write-attribute(name=wsdl-port,value=80)
+
+7.9 Change myphotos application settings:
+
+7.10 Deploy applications:
+deploy --force C:\Users\devstudy\.m2\repository\net\devstudy\myphotos-ear\1.0\myphotos-ear-1.0.ear
+deploy --force C:\Users\devstudy\.m2\repository\net\devstudy\myphotos-mdb-ear\1.0\myphotos-mdb-ear-1.0.ear
+deploy --force C:\Users\devstudy\.m2\repository\net\devstudy\myphotos-remote-project\1.0\myphotos-remote-project-1.0.war

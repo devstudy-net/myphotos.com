@@ -43,7 +43,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @WebServlet(value="/index.html", loadOnStartup = 1)
 public class TestRemoteClientController extends HttpServlet {
 
-    @EJB(lookup = "java:global/myphotos-ear/myphotos-ejb/ProfileServiceBean!net.devstudy.myphotos.rmi.service.ProfileRemoteService")
+    @EJB(lookup = "java:jboss/exported/myphotos-ear-1.0/myphotos-ejb/ProfileServiceBean!net.devstudy.myphotos.rmi.service.ProfileRemoteService")
     private ProfileRemoteService profileEjbService;
     
     @WebServiceRef(wsdlLocation = "http://soap.myphotos.com/ws/ProfileService?wsdl")
