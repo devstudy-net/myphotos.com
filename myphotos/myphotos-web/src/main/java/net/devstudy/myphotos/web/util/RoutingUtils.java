@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.web.util;
 
 import java.io.IOException;
@@ -26,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.devstudy.myphotos.web.security.SecurityUtils;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
@@ -49,22 +48,22 @@ public class RoutingUtils {
     public static void sendJson(JsonObject json, HttpServletRequest request, HttpServletResponse response) throws IOException {
         sendJson("application/json", json, request, response);
     }
-    
-    public static void redirectToValidAuthUrl(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    	if (SecurityUtils.isTempAuthenticated()) {
+
+    public static void redirectToValidAuthUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SecurityUtils.isTempAuthenticated()) {
             redirectToUrl("/sign-up", request, response);
         } else {
-            redirectToUrl("/" + SecurityUtils.getCurrentProfile().getUid(), request, response);
+            redirectToUrl("/" + SecurityUtils.getCurrentProfileId().getUid(), request, response);
         }
     }
+
     /*
-    Based on recommendations: https://docs.fineuploader.com/endpoint_handlers/traditional.html#response
-    */
+     *  Based on recommendations: https://docs.fineuploader.com/endpoint_handlers/traditional.html#response
+     */
     public static void sendFileUploaderJson(JsonObject json, HttpServletRequest request, HttpServletResponse response) throws IOException {
         sendJson("text/plain", json, request, response);
     }
-    
-    
+
     private static void sendJson(String contentType, JsonObject json, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String content = json.toString();
         int length = content.getBytes(StandardCharsets.UTF_8).length;

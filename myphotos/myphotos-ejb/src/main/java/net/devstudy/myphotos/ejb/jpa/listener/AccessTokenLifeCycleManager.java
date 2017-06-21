@@ -32,7 +32,7 @@ import net.devstudy.myphotos.model.domain.AccessToken;
  */
 public class AccessTokenLifeCycleManager {
 
-    private Logger logger = Logger.getLogger(AccessTokenLifeCycleManager.class.getName());
+    private final Logger logger = Logger.getLogger(AccessTokenLifeCycleManager.class.getName());
 
     @PrePersist
     public void setToken(AccessToken model) {

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.rest.model;
 
 import io.swagger.annotations.ApiModel;
@@ -22,18 +21,18 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @XmlType(name = "")
 @ApiModel("ProfileWithPhotos")
-public class ProfileWithPhotosREST extends ProfileREST{
+public class ProfileWithPhotosREST extends ProfileREST {
+
+    private List<? extends ProfilePhotoREST> photos;
 
     @ApiModelProperty(required = true, value = "Photo list")
-    private List<? extends ProfilePhotoREST> photos;
-    
     public List<? extends ProfilePhotoREST> getPhotos() {
         return photos;
     }

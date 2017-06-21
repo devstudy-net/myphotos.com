@@ -13,38 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.devstudy.myphotos.rest.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import javax.xml.bind.annotation.XmlType;
+package net.devstudy.myphotos.web.security;
+
+import java.io.Serializable;
+import net.devstudy.myphotos.model.domain.Profile;
 
 /**
- *
- *
+ * 
+ * 
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name = "")
-@ApiModel("UploadPhotoResult")
-public class UploadPhotoResultREST extends ImageLinkREST {
-
+public class ProfileId implements Serializable{
     private Long id;
+    private String uid;
+    private String email;
 
-    public UploadPhotoResultREST(Long id, String url) {
-        super(url);
-        this.id = id;
+    public ProfileId() {
+    }
+    
+    public ProfileId(Profile profile) {
+        id = profile.getId();
+        uid = profile.getUid();
+        email = profile.getEmail();
     }
 
-    public UploadPhotoResultREST() {
-    }
-
-    @ApiModelProperty(required = true, value = "Photo id for uploaded photo")
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

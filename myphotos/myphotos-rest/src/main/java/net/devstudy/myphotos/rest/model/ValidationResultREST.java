@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.rest.model;
 
 import io.swagger.annotations.ApiModel;
@@ -21,15 +20,14 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @ApiModel("ValidationResult")
-public class ValidationResultREST extends ErrorMessageREST{
-    
-    @ApiModelProperty(required = true)
+public class ValidationResultREST extends ErrorMessageREST {
+
     private List<ValidationItemREST> items;
 
     public ValidationResultREST() {
@@ -41,6 +39,7 @@ public class ValidationResultREST extends ErrorMessageREST{
         this.items = items;
     }
 
+    @ApiModelProperty(required = true)
     public List<ValidationItemREST> getItems() {
         return items;
     }

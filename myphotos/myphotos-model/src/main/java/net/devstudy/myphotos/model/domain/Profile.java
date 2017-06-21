@@ -44,73 +44,34 @@ import net.devstudy.myphotos.model.validation.EnglishLanguage;
 })
 public class Profile extends AbstractDomain {
 
+    private Long id;
+
+    private String uid;
+
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String avatarUrl;
+
+    private String jobTitle;
+
+    private String location;
+
+    private int photoCount;
+
+    private int rating;
+
+    public Profile() {
+    }
+
     @Id
     @Basic(optional = false)
     @Column(unique = true, nullable = false, updatable = false)
     @SequenceGenerator(name = "profile_generator", sequenceName = "profile_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_generator")
-    private Long id;
-
-    @NotNull
-    @Size(max = 255)
-    @Basic(optional = false)
-    @Column(unique = true, nullable = false, length = 255, updatable = false)
-    private String uid;
-
-    @Email
-    @NotNull
-    @Size(max = 100)
-    @Basic(optional = false)
-    @Column(unique = true, nullable = false, length = 100, updatable = false)
-    private String email;
-
-    @NotNull(message = "{Profile.firstName.NotNull}")
-    @Size(min = 1, max = 60, message = "{Profile.firstName.Size}")
-    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false)
-    @Basic(optional = false)
-    @Column(name = "first_name", nullable = false, length = 60)
-    private String firstName;
-
-    @NotNull(message = "{Profile.lastName.NotNull}")
-    @Size(min = 1, max = 60, message = "{Profile.lastName.Size}")
-    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false)
-    @Basic(optional = false)
-    @Column(name = "last_name", nullable = false, length = 60)
-    private String lastName;
-
-    @NotNull
-    @Size(max = 255)
-    @Basic(optional = false)
-    @Column(name = "avatar_url", nullable = false, length = 255)
-    private String avatarUrl;
-
-    @NotNull(message = "{Profile.jobTitle.NotNull}")
-    @Size(min = 5, max = 100, message = "{Profile.jobTitle.Size}")
-    @EnglishLanguage(withSpecialSymbols = false)
-    @Basic(optional = false)
-    @Column(name = "job_title", nullable = false, length = 100)
-    private String jobTitle;
-
-    @NotNull(message = "{Profile.location.NotNull}")
-    @Size(min = 5, max = 100, message = "{Profile.location.Size}")
-    @EnglishLanguage(withSpecialSymbols = false)
-    @Basic(optional = false)
-    @Column(nullable = false, length = 100)
-    private String location;
-
-    @Min(0)
-    @Basic(optional = false)
-    @Column(name = "photo_count", nullable = false)
-    private int photoCount;
-
-    @Min(0)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private int rating;
-    
-    public Profile() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -119,6 +80,10 @@ public class Profile extends AbstractDomain {
         this.id = id;
     }
 
+    @NotNull
+    @Size(max = 255)
+    @Basic(optional = false)
+    @Column(unique = true, nullable = false, length = 255, updatable = false)
     public String getUid() {
         return uid;
     }
@@ -127,6 +92,11 @@ public class Profile extends AbstractDomain {
         this.uid = uid;
     }
 
+    @Email
+    @NotNull
+    @Size(max = 100)
+    @Basic(optional = false)
+    @Column(unique = true, nullable = false, length = 100, updatable = false)
     public String getEmail() {
         return email;
     }
@@ -135,6 +105,11 @@ public class Profile extends AbstractDomain {
         this.email = email;
     }
 
+    @NotNull
+    @Size(min = 1, max = 60)
+    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false)
+    @Basic(optional = false)
+    @Column(name = "first_name", nullable = false, length = 60)
     public String getFirstName() {
         return firstName;
     }
@@ -143,6 +118,11 @@ public class Profile extends AbstractDomain {
         this.firstName = firstName;
     }
 
+    @NotNull
+    @Size(min = 1, max = 60)
+    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false)
+    @Basic(optional = false)
+    @Column(name = "last_name", nullable = false, length = 60)
     public String getLastName() {
         return lastName;
     }
@@ -151,6 +131,10 @@ public class Profile extends AbstractDomain {
         this.lastName = lastName;
     }
 
+    @NotNull
+    @Size(max = 255)
+    @Basic(optional = false)
+    @Column(name = "avatar_url", nullable = false, length = 255)
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -159,6 +143,11 @@ public class Profile extends AbstractDomain {
         this.avatarUrl = avatarUrl;
     }
 
+    @NotNull
+    @Size(min = 5, max = 100)
+    @EnglishLanguage(withSpecialSymbols = false)
+    @Basic(optional = false)
+    @Column(name = "job_title", nullable = false, length = 100)
     public String getJobTitle() {
         return jobTitle;
     }
@@ -167,6 +156,11 @@ public class Profile extends AbstractDomain {
         this.jobTitle = jobTitle;
     }
 
+    @NotNull
+    @Size(min = 5, max = 100)
+    @EnglishLanguage(withSpecialSymbols = false)
+    @Basic(optional = false)
+    @Column(nullable = false, length = 100)
     public String getLocation() {
         return location;
     }
@@ -175,6 +169,9 @@ public class Profile extends AbstractDomain {
         this.location = location;
     }
 
+    @Min(0)
+    @Basic(optional = false)
+    @Column(name = "photo_count", nullable = false)
     public int getPhotoCount() {
         return photoCount;
     }
@@ -183,6 +180,9 @@ public class Profile extends AbstractDomain {
         this.photoCount = photoCount;
     }
 
+    @Min(0)
+    @Basic(optional = false)
+    @Column(nullable = false)
     public int getRating() {
         return rating;
     }
@@ -190,9 +190,9 @@ public class Profile extends AbstractDomain {
     public void setRating(int rating) {
         this.rating = rating;
     }
-    
+
     @Transient
-    public String getFullName(){
+    public String getFullName() {
         return String.format("%s %s", getFirstName(), getLastName());
     }
 }

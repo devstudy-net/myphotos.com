@@ -26,6 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("AuthentificationCode")
 public class AuthentificationCodeREST {
+
     private String code;
 
     @ApiModelProperty(required = true, value = "Authentification code retrieved from social service")

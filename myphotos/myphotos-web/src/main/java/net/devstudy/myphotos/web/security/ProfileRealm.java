@@ -16,7 +16,6 @@
 package net.devstudy.myphotos.web.security;
 
 import java.util.Collections;
-import net.devstudy.myphotos.model.domain.Profile;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -42,7 +41,7 @@ public class ProfileRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        if(principals.getPrimaryPrincipal() instanceof Profile) {
+        if(principals.getPrimaryPrincipal() instanceof ProfileId) {
             return new SimpleAuthorizationInfo(Collections.singleton(PROFILE_ROLE));
         } else {
             return null;
@@ -58,8 +57,8 @@ public class ProfileRealm extends AuthorizingRealm {
     @Override
     protected Object getAvailablePrincipal(PrincipalCollection principals) {
         Object principal = super.getAvailablePrincipal(principals);
-        if (principal instanceof Profile) {
-            return ((Profile) principal).getEmail();
+        if (principal instanceof ProfileId) {
+            return ((ProfileId) principal).getEmail();
         }
         return principal;
     }

@@ -86,7 +86,7 @@ public class ProfileSignUpServiceBean implements ProfileSignUpService, Serializa
 
                 @Override
                 public long getTimeOutInMillis() {
-                    return DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS;
+                    return 0;//Infinity
                 }
             });
         }

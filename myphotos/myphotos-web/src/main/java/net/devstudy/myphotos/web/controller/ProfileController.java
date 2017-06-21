@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.web.controller;
 
 import java.io.IOException;
@@ -39,13 +38,13 @@ import static net.devstudy.myphotos.web.util.RoutingUtils.forwardToPage;
 import static net.devstudy.myphotos.web.util.RoutingUtils.redirectToUrl;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @WebServlet(urlPatterns = "/", loadOnStartup = 1)
-public class ProfileController extends HttpServlet{
+public class ProfileController extends HttpServlet {
 
     private final List<String> homeUrls;
 
@@ -63,7 +62,7 @@ public class ProfileController extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (isHomeUrl(url)) {
-            if(SecurityUtils.isTempAuthenticated()) {
+            if (SecurityUtils.isTempAuthenticated()) {
                 redirectToUrl("/sign-up", req, resp);
             } else {
                 handleHomeRequest(req, resp);
@@ -84,6 +83,9 @@ public class ProfileController extends HttpServlet{
         long totalCount = photoService.countAllPhotos();
         req.setAttribute("totalCount", totalCount);
         req.setAttribute("sortMode", sortMode.name().toLowerCase());
+        if (SecurityUtils.isAuthenticated()) {
+            req.setAttribute("profile", profileService.findByUid(SecurityUtils.getCurrentProfileId().getUid()));
+        }
         forwardToPage("home", req, resp);
     }
 
@@ -92,7 +94,7 @@ public class ProfileController extends HttpServlet{
         return sortMode.isPresent() ? SortMode.of(sortMode.get()) : SortMode.POPULAR_PHOTO;
     }
 
-    private void handleProfileRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    private void handleProfileRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uid = req.getRequestURI().substring(1);
         Profile profile = profileService.findByUid(uid);
         req.setAttribute("profile", profile);

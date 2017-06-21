@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @see http://devstudy.net
  */
 @XmlRootElement(name = "imageLink")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class ImageLinkSOAP {
 
     private String url;

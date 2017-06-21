@@ -18,14 +18,12 @@ package net.devstudy.myphotos.web.controller.logged;
 
 import java.util.Collections;
 import java.util.Map;
-import javax.inject.Inject;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import static net.devstudy.myphotos.common.config.Constants.MAX_UPLOADED_PHOTO_SIZE_IN_BYTES;
 import net.devstudy.myphotos.model.AsyncOperation;
 import net.devstudy.myphotos.model.domain.Profile;
-import net.devstudy.myphotos.service.ProfileService;
 import net.devstudy.myphotos.web.model.PartImageResource;
 
 /**
@@ -38,9 +36,6 @@ import net.devstudy.myphotos.web.model.PartImageResource;
 @WebServlet(urlPatterns = "/upload-avatar", asyncSupported = true, loadOnStartup = 1)
 @MultipartConfig(maxFileSize = MAX_UPLOADED_PHOTO_SIZE_IN_BYTES)
 public class UploadAvatarController extends AbstractUploadController<Profile> {
-
-    @Inject
-    private ProfileService profileService;
 
     @Override
     protected void uploadImage(Profile profile, PartImageResource partImageResource, AsyncOperation<Profile> asyncOperation) {

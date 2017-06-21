@@ -40,46 +40,25 @@ import javax.validation.constraints.Size;
 @Table(catalog = "myphotos", schema = "public")
 public class Photo extends AbstractDomain {
 
+    private Long id;
+
+    private String smallUrl;
+
+    private String largeUrl;
+
+    private String originalUrl;
+
+    private long views;
+
+    private long downloads;
+
+    private Profile profile;
+
     @Id
     @Basic(optional = false)
     @Column(unique = true, nullable = false, updatable = false)
     @SequenceGenerator(name = "photo_generator", sequenceName = "photo_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_generator")
-    private Long id;
-
-    @NotNull
-    @Size(max = 255)
-    @Basic(optional = false)
-    @Column(name = "small_url", nullable = false, length = 255, updatable = false)
-    private String smallUrl;
-
-    @NotNull
-    @Size(max = 255)
-    @Basic(optional = false)
-    @Column(name = "large_url", nullable = false, length = 255, updatable = false)
-    private String largeUrl;
-
-    @NotNull
-    @Size(max = 255)
-    @Basic(optional = false)
-    @Column(name = "original_url", nullable = false, length = 255, updatable = false)
-    private String originalUrl;
-
-    @Min(0)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private long views;
-
-    @Min(0)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private long downloads;
-
-    @NotNull
-    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Profile profile;
-
     public Long getId() {
         return id;
     }
@@ -88,6 +67,10 @@ public class Photo extends AbstractDomain {
         this.id = id;
     }
 
+    @NotNull
+    @Size(max = 255)
+    @Basic(optional = false)
+    @Column(name = "small_url", nullable = false, length = 255, updatable = false)
     public String getSmallUrl() {
         return smallUrl;
     }
@@ -96,6 +79,10 @@ public class Photo extends AbstractDomain {
         this.smallUrl = smallUrl;
     }
 
+    @NotNull
+    @Size(max = 255)
+    @Basic(optional = false)
+    @Column(name = "large_url", nullable = false, length = 255, updatable = false)
     public String getLargeUrl() {
         return largeUrl;
     }
@@ -104,6 +91,10 @@ public class Photo extends AbstractDomain {
         this.largeUrl = largeUrl;
     }
 
+    @NotNull
+    @Size(max = 255)
+    @Basic(optional = false)
+    @Column(name = "original_url", nullable = false, length = 255, updatable = false)
     public String getOriginalUrl() {
         return originalUrl;
     }
@@ -112,6 +103,9 @@ public class Photo extends AbstractDomain {
         this.originalUrl = originalUrl;
     }
 
+    @Min(0)
+    @Basic(optional = false)
+    @Column(nullable = false)
     public long getViews() {
         return views;
     }
@@ -120,6 +114,9 @@ public class Photo extends AbstractDomain {
         this.views = views;
     }
 
+    @Min(0)
+    @Basic(optional = false)
+    @Column(nullable = false)
     public long getDownloads() {
         return downloads;
     }
@@ -128,6 +125,9 @@ public class Photo extends AbstractDomain {
         this.downloads = downloads;
     }
 
+    @NotNull
+    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     public Profile getProfile() {
         return profile;
     }

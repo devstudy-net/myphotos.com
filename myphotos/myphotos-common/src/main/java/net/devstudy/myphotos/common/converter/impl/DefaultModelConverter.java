@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.common.converter.impl;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +26,14 @@ import javax.inject.Inject;
 import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
 import net.devstudy.myphotos.common.converter.ModelConverter;
 import net.devstudy.myphotos.common.converter.UrlConveter;
+import static net.devstudy.myphotos.common.converter.impl.ConverterUtils.isAnnotationPresent;
 import net.devstudy.myphotos.exception.ConfigException;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
@@ -43,7 +42,7 @@ public class DefaultModelConverter implements ModelConverter {
 
     @Inject
     private UrlConveter urlConveter;
-    
+
     @Override
     public <S, D> D convert(S source, Class<D> destinationClass) {
         try {
@@ -84,26 +83,12 @@ public class DefaultModelConverter implements ModelConverter {
         Class<?> destinationClass = propertyUtils.getPropertyType(result, name);
         if (destinationClass.isPrimitive() || value.getClass().isPrimitive()) {
             return value;
-        } else if (isConvertAsUrlPresent(result, name)) {
+        } else if (isAnnotationPresent(ConvertAsURL.class, result, name)) {
             return urlConveter.convert(String.valueOf(value));
         } else if (value.getClass() != destinationClass) {
             return convert(value, destinationClass);
         }
         return value;
-    }
-
-    private <D> boolean isConvertAsUrlPresent(D result, String name) {
-        Field field = null;
-        Class<?> cl = result.getClass();
-        while(cl != null) {
-            try {
-                field = cl.getDeclaredField(name);
-            } catch (NoSuchFieldException ex) {
-                // do nothing
-            }
-            cl = cl.getSuperclass();
-        }
-        return field != null && field.isAnnotationPresent(ConvertAsURL.class);
     }
 
 }

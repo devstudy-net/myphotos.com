@@ -22,20 +22,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @XmlRootElement(name = "profilePhotos")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class ProfilePhotosSOAP {
 
-    @XmlElement(name="photo")
     private List<ProfilePhotoSOAP> photos;
-    
+
     private Long total;
 
+    @XmlElement(name = "photo")
     public List<ProfilePhotoSOAP> getPhotos() {
         return photos;
     }

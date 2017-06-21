@@ -48,7 +48,7 @@ public class SaveProfileController extends AbstractProfileSaveController {
 
     @Override
     protected Profile getCurrentProfile() {
-        return SecurityUtils.getCurrentProfile();
+        return profileService.findById(SecurityUtils.getCurrentProfileId().getId());
     }
 
     @Override

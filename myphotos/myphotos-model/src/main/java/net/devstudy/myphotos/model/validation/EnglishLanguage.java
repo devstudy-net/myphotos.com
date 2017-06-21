@@ -40,7 +40,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = {EnglishLanguageConstraintValidator.class})
 public @interface EnglishLanguage {
 
-    String message() default "{javax.validation.constraints.EnglishLanguage.message}";
+    String message() default "Only latin characters supported";
     
     // 0123456789
     boolean withNumbers() default true;

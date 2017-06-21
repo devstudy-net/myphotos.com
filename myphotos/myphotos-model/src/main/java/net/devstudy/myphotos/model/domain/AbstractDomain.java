@@ -36,14 +36,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 @MappedSuperclass
 public abstract class AbstractDomain implements Serializable{
+    
+    private Date created;
 
     @NotNull
     @Past
     @Basic(optional = false)
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-
     public Date getCreated() {
         return created;
     }

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @see http://devstudy.net
  */
 @XmlRootElement(name = "photo")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class PhotoSOAP extends ProfilePhotoSOAP {
 
     private ProfileSOAP profile;

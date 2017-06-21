@@ -43,7 +43,7 @@ import javax.validation.constraints.Pattern;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Email {
 
-    String message() default "{javax.validation.constraints.Email.message}";
+    String message() default "Email is invalid";
 
     Class<?>[] groups() default {};
 

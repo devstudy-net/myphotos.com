@@ -30,34 +30,9 @@ import net.devstudy.myphotos.model.validation.EnglishLanguage;
  * @author devstudy
  * @see http://devstudy.net
  */
-public class ProfileForm {
-    
-    private String uid;
-    
-    private String avatarUrl;
+public class ProfileForm extends Profile {
 
-    @AssertTrue(message = "{ProfileForm.agree.AssertTrue}", groups = SignUpGroup.class)
     private boolean agree;
-    
-    @NotNull(message = "{Profile.firstName.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @Size(min = 1, max = 60, message = "{Profile.firstName.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    private String firstName;
-    
-    @NotNull(message = "{Profile.lastName.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @Size(min = 1, max = 60, message = "{Profile.lastName.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    private String lastName;
-    
-    @NotNull(message = "{Profile.jobTitle.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @Size(min = 5, max = 100, message = "{Profile.jobTitle.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @EnglishLanguage(withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    private String jobTitle;
-    
-    @NotNull(message = "{Profile.location.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @Size(min = 5, max = 100, message = "{Profile.location.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    @EnglishLanguage(withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
-    private String location;
 
     public ProfileForm() {
     }
@@ -71,6 +46,7 @@ public class ProfileForm {
         setAvatarUrl(profile.getAvatarUrl());
     }
 
+    @AssertTrue(message = "{ProfileForm.agree.AssertTrue}", groups = SignUpGroup.class)
     public boolean isAgree() {
         return agree;
     }
@@ -79,58 +55,34 @@ public class ProfileForm {
         this.agree = agree;
     }
 
+    @NotNull(message = "{Profile.firstName.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @Size(min = 1, max = 60, message = "{Profile.firstName.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
     public String getFirstName() {
-        return firstName;
+        return super.getFirstName();
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
+    @NotNull(message = "{Profile.lastName.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @Size(min = 1, max = 60, message = "{Profile.lastName.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @EnglishLanguage(withNumbers = false, withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
     public String getLastName() {
-        return lastName;
+        return super.getLastName();
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
+    @NotNull(message = "{Profile.jobTitle.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @Size(min = 5, max = 100, message = "{Profile.jobTitle.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @EnglishLanguage(withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
     public String getJobTitle() {
-        return jobTitle;
+        return super.getJobTitle();
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
+    @NotNull(message = "{Profile.location.NotNull}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @Size(min = 5, max = 100, message = "{Profile.location.Size}", groups = {SignUpGroup.class, ProfileUpdateGroup.class})
+    @EnglishLanguage(withSpecialSymbols = false, groups = {SignUpGroup.class, ProfileUpdateGroup.class})
     public String getLocation() {
-        return location;
+        return super.getLocation();
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-    
-    public String getFullName(){
-        return String.format("%s %s", getFirstName(), getLastName());
-    }
-    
     public void copyToProfile(Profile profile) {
         profile.setFirstName(getFirstName());
         profile.setLastName(getLastName());

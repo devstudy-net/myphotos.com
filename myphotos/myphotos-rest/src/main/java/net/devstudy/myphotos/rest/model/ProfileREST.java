@@ -29,27 +29,21 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "")
 @ApiModel("Profile")
-public class ProfileREST extends SimpleProfileREST{
+public class ProfileREST extends SimpleProfileREST {
 
-    @ApiModelProperty(required = true)
     private String firstName;
 
-    @ApiModelProperty(required = true)
     private String lastName;
 
-    @ConvertAsURL
-    @ApiModelProperty(required = true)
     private String avatarUrl;
 
-    @ApiModelProperty(required = true)
     private String jobTitle;
 
-    @ApiModelProperty(required = true)
     private String location;
 
-    @ApiModelProperty(required = true)
     private int photoCount;
 
+    @ApiModelProperty(required = true)
     public String getFirstName() {
         return firstName;
     }
@@ -58,6 +52,7 @@ public class ProfileREST extends SimpleProfileREST{
         this.firstName = firstName;
     }
 
+    @ApiModelProperty(required = true)
     public String getLastName() {
         return lastName;
     }
@@ -66,6 +61,8 @@ public class ProfileREST extends SimpleProfileREST{
         this.lastName = lastName;
     }
 
+    @ConvertAsURL
+    @ApiModelProperty(required = true)
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -74,6 +71,7 @@ public class ProfileREST extends SimpleProfileREST{
         this.avatarUrl = avatarUrl;
     }
 
+    @ApiModelProperty(required = true)
     public String getJobTitle() {
         return jobTitle;
     }
@@ -82,6 +80,7 @@ public class ProfileREST extends SimpleProfileREST{
         this.jobTitle = jobTitle;
     }
 
+    @ApiModelProperty(required = true)
     public String getLocation() {
         return location;
     }
@@ -90,6 +89,7 @@ public class ProfileREST extends SimpleProfileREST{
         this.location = location;
     }
 
+    @ApiModelProperty(required = true)
     public int getPhotoCount() {
         return photoCount;
     }

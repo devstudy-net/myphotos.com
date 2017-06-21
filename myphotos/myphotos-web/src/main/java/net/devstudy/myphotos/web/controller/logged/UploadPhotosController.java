@@ -39,7 +39,6 @@ import net.devstudy.myphotos.model.domain.Photo;
 import net.devstudy.myphotos.model.domain.Profile;
 import net.devstudy.myphotos.service.PhotoService;
 import net.devstudy.myphotos.web.model.PartImageResource;
-import net.devstudy.myphotos.web.security.SecurityUtils;
 
 /**
  *
@@ -56,7 +55,7 @@ public class UploadPhotosController extends AbstractUploadController<Photo> {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Profile profile = SecurityUtils.getCurrentProfile();
+        Profile profile = getCurrentProfile();
         List<Photo> photos = photoService.findProfilePhotos(profile.getId(), new Pageable(1, PHOTO_LIMIT - 1));
         req.setAttribute("profile", profile);
         req.setAttribute("photos", photos);

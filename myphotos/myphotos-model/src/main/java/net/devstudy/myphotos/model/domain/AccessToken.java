@@ -35,17 +35,14 @@ import javax.validation.constraints.NotNull;
 @Table(name = "access_token", schema = "public")
 public class AccessToken extends AbstractDomain {
 
+    private String token;
+
+    private Profile profile;
+
     @Id
     @Basic(optional = false)
     @Column(unique = true, nullable = false)
     @NotNull
-    private String token;
-
-    @NotNull
-    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Profile profile;
-
     public String getToken() {
         return token;
     }
@@ -54,6 +51,9 @@ public class AccessToken extends AbstractDomain {
         this.token = token;
     }
 
+    @NotNull
+    @JoinColumn(name = "profile_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     public Profile getProfile() {
         return profile;
     }

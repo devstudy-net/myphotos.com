@@ -28,14 +28,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @see http://devstudy.net
  */
 @XmlRootElement(name = "photos")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class PhotosSOAP {
-
-    @XmlElement(name="photo")
     private List<PhotoSOAP> photos;
     
     private Long total;
 
+    @XmlElement(name="photo")
     public List<PhotoSOAP> getPhotos() {
         return photos;
     }

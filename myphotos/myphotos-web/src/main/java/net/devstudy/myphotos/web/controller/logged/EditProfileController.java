@@ -19,6 +19,7 @@ package net.devstudy.myphotos.web.controller.logged;
 import static net.devstudy.myphotos.web.util.RoutingUtils.forwardToPage;
 
 import java.io.IOException;
+import javax.ejb.EJB;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.devstudy.myphotos.model.domain.Profile;
+import net.devstudy.myphotos.service.ProfileService;
 import net.devstudy.myphotos.web.form.ProfileForm;
 import net.devstudy.myphotos.web.security.SecurityUtils;
 
@@ -39,9 +41,12 @@ import net.devstudy.myphotos.web.security.SecurityUtils;
 @WebServlet(urlPatterns = "/edit", loadOnStartup = 1)
 public class EditProfileController extends HttpServlet {	
 
+    @EJB
+    private ProfileService profileService;
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Profile profile = SecurityUtils.getCurrentProfile();
+        Profile profile = profileService.findById(SecurityUtils.getCurrentProfileId().getId());
         req.setAttribute("profile", new ProfileForm(profile));
         forwardToPage("edit", req, resp);
     }

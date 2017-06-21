@@ -28,10 +28,10 @@ import org.apache.shiro.authc.RememberMeAuthenticationToken;
 public class ProfileAuthenticationToken implements RememberMeAuthenticationToken {
 
     private static final long serialVersionUID = 4351226293244178431L;
-    private final Profile profile;
+    private final ProfileId profileId;
 
     public ProfileAuthenticationToken(Profile profile) {
-        this.profile = profile;
+        this.profileId = new ProfileId(profile);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class ProfileAuthenticationToken implements RememberMeAuthenticationToken
     }
 
     @Override
-    public Profile getPrincipal() {
-        return profile;
+    public ProfileId getPrincipal() {
+        return profileId;
     }
 
     @Override

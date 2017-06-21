@@ -32,6 +32,7 @@ import javax.servlet.http.Part;
 import static net.devstudy.myphotos.common.config.Constants.DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS;
 import net.devstudy.myphotos.model.AsyncOperation;
 import net.devstudy.myphotos.model.domain.Profile;
+import net.devstudy.myphotos.service.ProfileService;
 import net.devstudy.myphotos.web.model.PartImageResource;
 import net.devstudy.myphotos.web.security.SecurityUtils;
 import static net.devstudy.myphotos.web.util.RoutingUtils.sendFileUploaderJson;
@@ -46,11 +47,14 @@ public abstract class AbstractUploadController<T> extends HttpServlet {
 
     @Inject
     protected Logger logger;
+    
+    @Inject
+    protected ProfileService profileService;
 
     @Override
     protected final void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Part part = req.getPart("qqfile");
-        Profile profile = SecurityUtils.getCurrentProfile();
+        Profile profile = getCurrentProfile();
         final AsyncContext asyncContext = req.startAsync(req, resp);
         asyncContext.setTimeout(DEFAULT_ASYNC_OPERATION_TIMEOUT_IN_MILLIS);
         uploadImage(profile, new PartImageResource(part), new AsyncOperation<T>() {
@@ -69,6 +73,10 @@ public abstract class AbstractUploadController<T> extends HttpServlet {
                 return asyncContext.getTimeout();
             }
         });
+    }
+    
+    protected Profile getCurrentProfile(){
+        return profileService.findById(SecurityUtils.getCurrentProfileId().getId());
     }
 
     protected abstract void uploadImage(Profile profile, PartImageResource partImageResource, AsyncOperation<T> asyncOperation);

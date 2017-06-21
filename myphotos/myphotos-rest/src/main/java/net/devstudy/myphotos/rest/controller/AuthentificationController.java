@@ -112,7 +112,7 @@ public class AuthentificationController {
         @ApiResponse(code = 404, message = "Profile not found. It is necessry to sign-up. Response body contains retrieved data from facebook", response = ProfileREST.class)
     })
     public Response facebookSignIn(AuthentificationCodeREST authentificationCode) {
-        return auth(authentificationCode, facebookSocialService);
+        return auth(authentificationCode, facebookSocialService, false);
     }
 
     @POST
@@ -125,7 +125,7 @@ public class AuthentificationController {
         @ApiResponse(code = 401, message = "Invalid authentification code", response = ErrorMessageREST.class)
     })
     public Response facebookSignUp(SignUpProfileREST signUpProfile) {
-        return auth(signUpProfile, facebookSocialService);
+        return auth(signUpProfile, facebookSocialService, true);
     }
 
     @POST
@@ -137,7 +137,7 @@ public class AuthentificationController {
         @ApiResponse(code = 404, message = "Profile not found. It is necessry to sign-up. Response body contains retrieved data from google plus", response = ProfileREST.class)
     })
     public Response googplePlusSignIn(AuthentificationCodeREST authentificationCode) {
-        return auth(authentificationCode, googplePlusSocialService);
+        return auth(authentificationCode, googplePlusSocialService, false);
     }
 
     @POST
@@ -150,7 +150,7 @@ public class AuthentificationController {
         @ApiResponse(code = 401, message = "Invalid authentification code", response = ErrorMessageREST.class)
     })
     public Response googplePlusSignUp(SignUpProfileREST signUpProfile) {
-        return auth(signUpProfile, googplePlusSocialService);
+        return auth(signUpProfile, googplePlusSocialService, true);
     }
 
     @POST
@@ -167,7 +167,7 @@ public class AuthentificationController {
         return Response.ok().build();
     }
 
-    protected Response auth(AuthentificationCodeREST model, SocialService socialService) {
+    protected Response auth(AuthentificationCodeREST model, SocialService socialService, boolean isSignUp) {
         validateCode(model.getCode());
         Profile profile = socialService.fetchProfile(model.getCode());
         Optional<Profile> profileOptional = profileService.findByEmail(profile.getEmail());
@@ -175,7 +175,7 @@ public class AuthentificationController {
             Profile signedInProfile = profileOptional.get();
             AccessToken accessToken = accessTokenService.generateAccessToken(signedInProfile);
             return buidResponse(OK, signedInProfile, Optional.of(accessToken.getToken()), SimpleProfileREST.class);
-        } else if (model instanceof SignUpProfileREST) {
+        } else if (isSignUp) {
             return processSignUp((SignUpProfileREST) model);
         } else {
             profileService.translitSocialProfile(profile);

@@ -29,12 +29,11 @@ import javax.xml.bind.annotation.XmlType;
 @ApiModel("SimpleProfile")
 public class SimpleProfileREST {
 
-    @ApiModelProperty(required = true, value = "Profile id. Uses as unique identificator of profile via rest api")
     private Long id;
 
-    @ApiModelProperty(required = true, value = "Profile uid. Can be useful if user wants to open profile via browser from his mobile application. Profile unique url will be http://myphotos.com/${uid}")
     private String uid;
 
+    @ApiModelProperty(required = true, value = "Profile id. Uses as unique identificator of profile via rest api")
     public Long getId() {
         return id;
     }
@@ -43,6 +42,7 @@ public class SimpleProfileREST {
         this.id = id;
     }
 
+    @ApiModelProperty(required = true, value = "Profile uid. Can be useful if user wants to open profile via browser from his mobile application. Profile unique url will be http://myphotos.com/${uid}")
     public String getUid() {
         return uid;
     }

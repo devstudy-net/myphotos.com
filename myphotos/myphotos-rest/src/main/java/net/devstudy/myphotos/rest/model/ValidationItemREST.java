@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.devstudy.myphotos.rest.model;
 
 import io.swagger.annotations.ApiModel;
@@ -21,18 +20,16 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
 @ApiModel("ValidationItem")
 public class ValidationItemREST {
-    
-    @ApiModelProperty(required = true, value = "Parameter name")
+
     private String field;
-    
-    @ApiModelProperty(required = true, value = "String error message list")
+
     private List<String> messages;
 
     public ValidationItemREST() {
@@ -43,6 +40,7 @@ public class ValidationItemREST {
         this.messages = messages;
     }
 
+    @ApiModelProperty(required = true, value = "Parameter name")
     public String getField() {
         return field;
     }
@@ -51,6 +49,7 @@ public class ValidationItemREST {
         this.field = field;
     }
 
+    @ApiModelProperty(required = true, value = "String error message list")
     public List<String> getMessages() {
         return messages;
     }

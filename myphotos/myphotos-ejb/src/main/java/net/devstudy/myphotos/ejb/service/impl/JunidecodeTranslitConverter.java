@@ -43,11 +43,11 @@ public class JunidecodeTranslitConverter implements TranslitConverter {
 
     @Override
     public String translit(String text) {
-        String result = customTranslit(text);
+        String result = executeCustomTranslit(text);
         return Junidecode.unidecode(result);
     }
 
-    private String customTranslit(String text) {
+    private String executeCustomTranslit(String text) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             String ch = String.valueOf(text.charAt(i));

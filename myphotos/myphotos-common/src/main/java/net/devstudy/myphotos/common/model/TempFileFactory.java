@@ -41,7 +41,7 @@ public class TempFileFactory {
             throw new CantCreateTempFileException(tempFilePath, e);
         }
     }
-    
+
     public static void deleteTempFile(Path path) {
         try {
             Files.deleteIfExists(path);
@@ -49,8 +49,15 @@ public class TempFileFactory {
             Logger.getLogger("TempFileEraser").log(Level.WARNING, "Can't delete temp file: " + path, ex);
         }
     }
-    
+
+    /**
+     *
+     *
+     * @author devstudy
+     * @see http://devstudy.net
+     */
     private static class CantCreateTempFileException extends IllegalStateException {
+
         private CantCreateTempFileException(Path tempFilePath, Throwable throwable) {
             super("Can't create temp file: " + tempFilePath, throwable);
         }

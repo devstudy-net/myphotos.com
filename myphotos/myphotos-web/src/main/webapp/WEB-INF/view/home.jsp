@@ -11,17 +11,14 @@
 <header id="header">
     <div class="inner">
         <shiro:authenticated>
-            <c:set var="currentAccountAvatarUrl"><shiro:principal property="avatarUrl"/></c:set>
-            <c:set var="currentAccountFullName"><shiro:principal property="fullName"/></c:set>
-            <c:set var="currentAccountUidUrl">/<shiro:principal property="uid"/></c:set>
-            <a href="javascript:void();" class="image avatar">
-                <img src="${currentAccountAvatarUrl}" alt="${currentAccountFullName}" />
+            <a href="javascript:void(0);" class="image avatar">
+                <img src="${profile.avatarUrl}" alt="${profile.fullName}" />
             </a>
-            <h1><strong>${currentAccountFullName}</strong></h1>
+            <h1><strong>${profile.fullName}</strong></h1>
             <br>
             <ul class="actions fit small">
-                <li><a href="${currentAccountUidUrl}" class="button special small">Go to my profile</a></li>
-            </ul> 
+                <li><a href="/${profile.uid}" class="button special small">Go to my profile</a></li>
+            </ul>
         </shiro:authenticated>
         <shiro:notAuthenticated>
             <h1><strong>To get personal page please signup with</strong></h1>

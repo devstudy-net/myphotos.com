@@ -28,6 +28,7 @@ import static net.devstudy.myphotos.rest.Constants.ACCESS_TOKEN_HEADER;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -85,6 +86,9 @@ import net.devstudy.myphotos.service.ProfileService;
     @ApiResponse(code = 504, message = SERVICE_UNAVAILABLE)
 })
 public class ProtectedProfileController {
+    
+    @Inject
+    private Logger logger;
 
     @EJB
     private AccessTokenService accessTokenService;
@@ -140,7 +144,7 @@ public class ProtectedProfileController {
     public void uploadAvatar(
             @Suspended final AsyncResponse asyncResponse,
             @ApiParam(value = "Profile number id", required = true)
-            @PathParam("id") Long id,
+            @PathParam("id") final Long id,
             @ApiParam(value = "Access token", required = true)
             @HeaderParam(ACCESS_TOKEN_HEADER) String accessToken,
             @ApiParam(value = "file to upload") UploadImageREST uploadImage) throws Exception {
@@ -150,7 +154,9 @@ public class ProtectedProfileController {
             @Override
             public void onSuccess(Profile result) {
                 String absoluteUrl = urlConveter.convert(result.getAvatarUrl());
-                asyncResponse.resume(new ImageLinkREST(absoluteUrl));
+                if(!asyncResponse.resume(new ImageLinkREST(absoluteUrl))){
+                    throw new IllegalStateException("Current async response is not suspended");
+                }
             }
 
             @Override
@@ -185,7 +191,9 @@ public class ProtectedProfileController {
             @Override
             public void onSuccess(Photo result) {
                 String absoluteUrl = urlConveter.convert(result.getSmallUrl());
-                asyncResponse.resume(new UploadPhotoResultREST(result.getId(), absoluteUrl));
+                if(!asyncResponse.resume(new UploadPhotoResultREST(result.getId(), absoluteUrl))){
+                    throw new IllegalStateException("Current async response is not suspended");
+                }
             }
 
             @Override

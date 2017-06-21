@@ -110,7 +110,7 @@ public class AsyncUploadImageManager {
         message.put(IMAGE_RESOURCE_TYPE.name(), imageResourceType.name());
         message.put(PROFILE_ID.name(), currentProfile.getId());
         context.createProducer()
-                //.setTimeToLive(ttl)
+                .setTimeToLive(ttl)
                 .setDeliveryMode(DeliveryMode.NON_PERSISTENT)
                 .send(uploadRequestQueue, message);
     }

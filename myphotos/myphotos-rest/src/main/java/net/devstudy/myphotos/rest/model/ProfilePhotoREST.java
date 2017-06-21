@@ -22,27 +22,24 @@ import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * 
- * 
+ *
+ *
  * @author devstudy
  * @see http://devstudy.net
  */
-@XmlType(name="")
+@XmlType(name = "")
 @ApiModel("ProfilePhoto")
 public class ProfilePhotoREST {
-    @ApiModelProperty(required = true, value = "Photo id. Uses as unique identificator for /preview and /download api")
+
     private Long id;
-    
-    @ConvertAsURL
-    @ApiModelProperty(required = true)
+
     private String smallUrl;
-    
-    @ApiModelProperty(required = true)
+
     private long views;
-    
-    @ApiModelProperty(required = true)
+
     private long downloads;
 
+    @ApiModelProperty(required = true, value = "Photo id. Uses as unique identificator for /preview and /download api")
     public Long getId() {
         return id;
     }
@@ -51,6 +48,8 @@ public class ProfilePhotoREST {
         this.id = id;
     }
 
+    @ConvertAsURL
+    @ApiModelProperty(required = true)
     public String getSmallUrl() {
         return smallUrl;
     }
@@ -59,6 +58,7 @@ public class ProfilePhotoREST {
         this.smallUrl = smallUrl;
     }
 
+    @ApiModelProperty(required = true)
     public long getViews() {
         return views;
     }
@@ -67,6 +67,7 @@ public class ProfilePhotoREST {
         this.views = views;
     }
 
+    @ApiModelProperty(required = true)
     public long getDownloads() {
         return downloads;
     }

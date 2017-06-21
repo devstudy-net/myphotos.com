@@ -14,16 +14,13 @@
 
 <header id="header">
     <div class="inner">
-        <c:set var="currentAccountAvatarUrl"><shiro:principal property="avatarUrl"/></c:set>
-        <c:set var="currentAccountFullName"><shiro:principal property="fullName"/></c:set>
-        <c:set var="currentAccountUidUrl">/<shiro:principal property="uid"/></c:set>
-            <a href="javascript:void();" class="image avatar">
-                <img src="${currentAccountAvatarUrl}" alt="${currentAccountFullName}" />
+        <a href="javascript:void(0);" class="image avatar">
+            <img src="${profile.avatarUrl}" alt="${profile.fullName}" />
         </a>
-        <h1><strong>${currentAccountFullName}</strong></h1>
+        <h1><strong>${profile.fullName}</strong></h1>
         <br>
         <ul class="actions fit small">
-            <li><a href="${currentAccountUidUrl}" class="button special small">Go to my profile</a></li>
+            <li><a href="/${profile.uid}" class="button special small">Go to my profile</a></li>
         </ul>
     </div>
 </header>

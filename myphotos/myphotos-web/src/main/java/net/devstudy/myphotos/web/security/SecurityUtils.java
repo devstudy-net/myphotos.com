@@ -61,10 +61,10 @@ public class SecurityUtils {
         return currentSubject.isAuthenticated() && TEMP_PROFILE.equals(currentSubject.getPrincipal());
     }
     
-    public static Profile getCurrentProfile() {
+    public static ProfileId getCurrentProfileId() {
         Subject currentSubject = org.apache.shiro.SecurityUtils.getSubject();
         if(currentSubject.isAuthenticated()) {
-            return (Profile)currentSubject.getPrincipal();
+            return (ProfileId)currentSubject.getPrincipal();
         } else {
             throw new IllegalStateException("Current subject is not authenticated");
         }

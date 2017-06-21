@@ -171,9 +171,6 @@ public class ProfileServiceBean implements ProfileService, ProfileRemoteService{
     }
     
     private void saveNewAvatar(Profile currentProfile, String avatarUrl) {
-        if (ImageCategory.isImageCategoryUrl(currentProfile.getAvatarUrl())) {
-            imageStorageService.deletePublicImage(currentProfile.getAvatarUrl());
-        }
         currentProfile.setAvatarUrl(avatarUrl);
         profileRepository.update(currentProfile);
     }

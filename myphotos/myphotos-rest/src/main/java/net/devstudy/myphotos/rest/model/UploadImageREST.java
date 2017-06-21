@@ -31,11 +31,15 @@ import org.apache.commons.fileupload.FileItem;
 @ApiModel("UploadImage")
 public class UploadImageREST {
 
-    @ApiModelProperty(hidden = true)
     private final FileItem fileItem;
 
     public UploadImageREST(FileItem fileItem) {
         this.fileItem = fileItem;
+    }
+
+    @ApiModelProperty(hidden = true)
+    public FileItem getFileItem() {
+        return fileItem;
     }
 
     @ApiModelProperty(hidden = true)

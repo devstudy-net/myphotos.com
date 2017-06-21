@@ -44,9 +44,9 @@ public class SignUpProfileREST extends AuthentificationCodeREST{
     }
 
     @NotNull(message = "{Profile.firstName.NotNull}")
-    @Size(min = 1, message = "{Profile.firstName.Size}")
+    @Size(min = 1, max = 60, message = "{Profile.firstName.Size}")
     @EnglishLanguage(withNumbers = false, withPunctuations = false, withSpecialSymbols = false)
-    @ApiModelProperty(required = true, value = "Min size = 1, Only latin characters allowed")
+    @ApiModelProperty(required = true, value = "Only latin characters allowed")
     public String getFirstName() {
         return firstName;
     }
@@ -56,9 +56,9 @@ public class SignUpProfileREST extends AuthentificationCodeREST{
     }
 
     @NotNull(message = "{Profile.lastName.NotNull}")
-    @Size(min = 1, message = "{Profile.lastName.Size}")
+    @Size(min = 1, max = 60, message = "{Profile.lastName.Size}")
     @EnglishLanguage(withNumbers = false, withPunctuations = false, withSpecialSymbols = false)
-    @ApiModelProperty(required = true, value = "Min size = 1, Only latin characters allowed")
+    @ApiModelProperty(required = true, value = "Only latin characters allowed")
     public String getLastName() {
         return lastName;
     }
@@ -68,9 +68,9 @@ public class SignUpProfileREST extends AuthentificationCodeREST{
     }
     
     @NotNull(message = "{Profile.jobTitle.NotNull}")
-    @Size(min = 5, message = "{Profile.jobTitle.Size}")
+    @Size(min = 5, max = 100, message = "{Profile.jobTitle.Size}")
     @EnglishLanguage(withSpecialSymbols = false)
-    @ApiModelProperty(required = true, value = "Min size = 5, Only latin characters allowed")
+    @ApiModelProperty(required = true, value = "Only latin characters allowed")
     public String getJobTitle() {
         return jobTitle;
     }
@@ -80,9 +80,9 @@ public class SignUpProfileREST extends AuthentificationCodeREST{
     }
     
     @NotNull(message = "{Profile.location.NotNull}")
-    @Size(min = 5, message = "{Profile.location.Size}")
+    @Size(min = 5, max = 100, message = "{Profile.location.Size}")
     @EnglishLanguage(withSpecialSymbols = false)
-    @ApiModelProperty(required = true, value = "Min size = 5, Only latin characters allowed")
+    @ApiModelProperty(required = true, value = "Only latin characters allowed")
     public String getLocation() {
         return location;
     }

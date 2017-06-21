@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.ApplicationScoped;
+import net.devstudy.myphotos.exception.ConfigException;
 
 /**
  * 
@@ -65,7 +66,7 @@ public class PhotoGenerator {
                 list.add(path.toAbsolutePath().toString());
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+           throw new ConfigException("Can't get list photos from "+rootPath.toAbsolutePath().toString(), ex);
         }
         Collections.shuffle(list);
         return list;

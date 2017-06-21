@@ -27,7 +27,7 @@ import net.devstudy.myphotos.exception.ApplicationException;
 public class HttpStatusException extends ApplicationException{
     private final int status;
     public HttpStatusException(int status, String message) {
-        super(message);
+        super(String.format("Status: %s, message: %s", status, message));
         this.status = status;
     }
 

@@ -32,9 +32,9 @@ import net.devstudy.myphotos.common.annotation.converter.ConvertAsURL;
  * @see http://devstudy.net
  */
 @XmlRootElement(name = "profile")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class ProfileSOAP {
-    @XmlAttribute(required = true)
+    
     private Long id;
     
     private String uid;
@@ -43,7 +43,6 @@ public class ProfileSOAP {
     
     private String lastName;
     
-    @ConvertAsURL
     private String avatarUrl;
     
     private String jobTitle;
@@ -52,10 +51,9 @@ public class ProfileSOAP {
     
     private int photoCount;
     
-    @XmlElementWrapper(name="photos")
-    @XmlElement(name="photo")
     private List<ProfilePhotoSOAP> photos;
 
+    @XmlAttribute(required = true)
     public Long getId() {
         return id;
     }
@@ -88,6 +86,7 @@ public class ProfileSOAP {
         this.lastName = lastName;
     }
 
+    @ConvertAsURL
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -120,6 +119,8 @@ public class ProfileSOAP {
         this.photoCount = photoCount;
     }
 
+    @XmlElementWrapper(name="photos")
+    @XmlElement(name="photo")
     public List<ProfilePhotoSOAP> getPhotos() {
         return photos;
     }

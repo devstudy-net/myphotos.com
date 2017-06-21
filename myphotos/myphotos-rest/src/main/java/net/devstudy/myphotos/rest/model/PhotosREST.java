@@ -30,10 +30,8 @@ import javax.xml.bind.annotation.XmlType;
 @ApiModel("Photos")
 public class PhotosREST {
 
-    @ApiModelProperty(required = true, value = "Photo list")
     private List<? extends ProfilePhotoREST> photos;
 
-    @ApiModelProperty(required = false, value = "Total photo count")
     private Long total;
 
     public PhotosREST(List<? extends ProfilePhotoREST> photos) {
@@ -43,6 +41,7 @@ public class PhotosREST {
     public PhotosREST() {
     }
 
+    @ApiModelProperty(required = true, value = "Photo list")
     public List<? extends ProfilePhotoREST> getPhotos() {
         return photos;
     }
@@ -51,6 +50,7 @@ public class PhotosREST {
         this.photos = photos;
     }
 
+    @ApiModelProperty(required = false, value = "Total photo count")
     public Long getTotal() {
         return total;
     }
