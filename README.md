@@ -46,31 +46,31 @@ login
 
 ###### 1. Клонировать github репозиторий в текущую папку используя docker образ devstudy/git:
 ~~~~
-docker run -u 1000 -it --rm -v "$PWD":/opt/src/ -w /opt/src devstudy/git git clone "https://github.com/devstudy-net/myphotos.com"
+docker run -it --rm -v "$PWD":/opt/src/ -w /opt/src devstudy/git git clone "https://github.com/devstudy-net/myphotos.com"
 ~~~~
 ###### 2. Изменить текущую папку на корневую папку модуля 'myphotos':
 ~~~~
 cd myphotos.com/myphotos/
 ~~~~
-###### 3. Собрать модуль 'myphotos' с помощью maven используя docker образ 'devstudy/maven:jdk8':
+###### 3. Собрать модуль 'myphotos' с помощью maven, используя docker образ 'devstudy/maven:jdk8':
 ~~~~
-docker run -u 1000 -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
+docker run -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
 ~~~~
 ###### 4. Изменить текущую папку на корневую папку модуля 'myphotos-mdb':
 ~~~~
 cd ../myphotos-mdb/
 ~~~~
-###### 5. Собрать модуль 'myphotos-mdb' с помощью maven используя docker образ 'devstudy/maven:jdk8':
+###### 5. Собрать модуль 'myphotos-mdb' с помощью maven, используя docker образ 'devstudy/maven:jdk8':
 ~~~~
-docker run -u 1000 -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
+docker run -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
 ~~~~
 ###### 6. Изменить текущую папку на корневую папку модуля 'myphotos-remote-project':
 ~~~~
 cd ../myphotos-remote-project/
 ~~~~
-###### 7. Собрать модуль 'myphotos-remote-project' с помощью maven используя docker образ 'devstudy/maven:jdk8':
+###### 7. Собрать модуль 'myphotos-remote-project' с помощью maven, используя docker образ 'devstudy/maven:jdk8':
 ~~~~
-docker run -u 1000 -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
+docker run -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/opt/src/ -w /opt/src devstudy/maven:jdk8 mvn -Duser.home=/home/mvn clean install
 ~~~~
 ###### 8. Изменить текущую папку на корневую папку проекта 'myphotos.com':
 ~~~~
@@ -91,7 +91,7 @@ docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 251386  bytes 383996774 (383.9 MB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ~~~~
-*(В данном примере IP адрес docker хоста = **172.17.0.1**)*
+*(В данном примере IP адрес docker хоста отображается во второй строке: **inet 172.17.0.1**)*
 
 ###### 10. Создать файл '.env' в папке 'myphotos.com' и указать переменные окружения:
 *(Если данный файл не создавать, то в проекте не будут работать модули **myphotos-remote**, **facebook** и **google**):*
@@ -112,9 +112,9 @@ DEVSTUDY_MYPHOTOS_FACEBOOK_SECRET=TODO
 127.0.0.1	soap.myphotos.com
 ~~~~
 *Местоположение файла `hosts`:*
-* C:\Windows\System32\drivers\etc\hosts *(Windows)*
-* /etc/hosts *(Linux)*
-* /private/etc/hosts *(macOS)*
+* **Windows**: C:\Windows\System32\drivers\etc\hosts
+* **Linux**: /etc/hosts
+* **macOS**: /private/etc/hosts
 ###### 12. Собрать и запустить docker контейнеры:
 ~~~~
 docker-compose up
@@ -128,9 +128,13 @@ docker-compose up
     * `http://api.myphotos.com/swagger-ui-2x/index.html` - Swagger Version 2x
     * `http://api.myphotos.com/swagger-ui-3x/index.html` - Swagger Version 3x
 * SOAP endpoint (Для интеграции по SOAP протоколу)
-    * `http://soap.myphotos.com/ws/` - WSDL схемы. *(Для тестирования SOAP endpoint, необходимо установить SOAP клиент, например Wizdler для Chrome https://chrome.google.com/webstore/detail/wizdler/oebpmncolmhiapingjaagmapififiakb?hl=en)*
+    * `http://soap.myphotos.com/ws/` - WSDL схемы. 
 * Удаленное взаимодействие (Модуль myphotos-remote-project-1.0): 
     * `http://myphotos.com/myphotos-remote-project-1.0/` - тестовый endpoint для тестирования удаленного взаимодействия
+    
+*FYI: Для тестирования SOAP endpoint, необходимо установить SOAP клиент, например **Wizdler** для Chrome:*
+
+*(https://chrome.google.com/webstore/detail/wizdler/oebpmncolmhiapingjaagmapififiakb?hl=en)*
 ###### 14. Если нужно отлаживать проект, то по-умолчанию docker-compose открывает следующие порты:
 * 5432 - для доступа к postgres базе данных, с помощью SQL клиента;
 * 8080 - для доступа к Wildfly, минуя nginx;

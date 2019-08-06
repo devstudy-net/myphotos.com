@@ -15,17 +15,17 @@
  */
 package net.devstudy.myphotos.common.producer;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 
 /**
- *
- *
  * @author devstudy
  * @see http://devstudy.net
  */
@@ -47,6 +47,7 @@ public class ApplicationPropertiesStorage extends AbstractPropertiesLoader {
         loadProperties(applicationProperties, "classpath:application.properties");
         overrideApplicationProperties(applicationProperties, System.getenv(), "System environment");
         overrideApplicationProperties(applicationProperties, System.getProperties(), "System properties");
+        resolvePropertyVariables(applicationProperties);
         logger.log(Level.INFO, "Application properties loaded successful");
     }
 
@@ -65,5 +66,36 @@ public class ApplicationPropertiesStorage extends AbstractPropertiesLoader {
             loadProperties(applicationProperties, configFilePath);
             logger.log(Level.INFO, "Overrided application properties from file {0}, defined in the {1}", new String[]{configFilePath, description});
         }
+    }
+
+    private void resolvePropertyVariables(Properties applicationProperties) {
+        List<String> variables = new ArrayList<>();
+        for (Map.Entry<Object, Object> entry : applicationProperties.entrySet()) {
+            String value = (String) entry.getValue();
+            if (value.startsWith("${")) {
+                if (value.endsWith("}")) {
+                    String var = value.substring(2, value.length() - 1);
+                    entry.setValue(resolvePropertyVariable(var));
+                    variables.add(var);
+                } else {
+                    throw new IllegalArgumentException("Missing '}' for property value: " + value);
+                }
+            }
+        }
+        if (!variables.isEmpty()) {
+            logger.log(Level.INFO, "Application property variables resolved successful: " + variables);
+        }
+    }
+
+    private String resolvePropertyVariable(String var) {
+        String value = System.getProperty(var);
+        if (value != null) {
+            return value;
+        }
+        value = System.getenv(var);
+        if (value != null) {
+            return value;
+        }
+        throw new IllegalArgumentException("Application variable '" + var + "' not defined");
     }
 }

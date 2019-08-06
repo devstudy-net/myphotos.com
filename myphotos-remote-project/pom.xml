@@ -114,15 +114,10 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlFiles>
-                                <wsdlFile>soap.myphotos.com/ws/ProfileService.wsdl</wsdlFile>
-                            </wsdlFiles>
                             <packageName>net.devstudy.myphotos.remote.project.ws.model</packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://soap.myphotos.com/ws/ProfileService?wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/ProfileService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-ProfileService</id>
                         <phase>generate-sources</phase>
@@ -147,7 +142,7 @@
             <plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.2.3-SNAPSHOT</version>
+                <version>2.2.3</version>
         
                 <executions>
                     <execution>
@@ -157,7 +152,7 @@
                         </goals>
                         <configuration>
                             <language>jaxrs-spec</language>
-                            <inputSpec>http://api.myphotos.com/v1/swagger.json</inputSpec>
+                            <inputSpec>src/rest/swagger.json</inputSpec>
                             
                             <configOptions>
                                 <sourceFolder>/</sourceFolder>
