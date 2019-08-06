@@ -1,0 +1,78 @@
+#
+# @author devstudy
+# @see http://devstudy.net
+# @see https://docs.docker.com/compose/compose-file/
+#
+# docker-compose build
+# docker-compose up
+# docker-compose down
+
+version: '3.7'
+
+services:
+  myphotos-postgres:
+    image: postgres:9.5-alpine
+    container_name: myphotos-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=myphotos
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=myphotos
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/postgres/:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - private-network
+
+  myphotos-backend:
+    restart: always
+    build:
+      context: ./
+      dockerfile: docker/myphotos-backend.dockerfile
+    image: devstudy/myphotos-backend:1.0
+    container_name: myphotos-backend
+    environment:
+      # Social application settings
+      - googleClientId=${DEVSTUDY_MYPHOTOS_GOOGLE_CLIENT_ID}
+      - facebookClientId=${DEVSTUDY_MYPHOTOS_FACEBOOK_CLIENT_ID}
+      - facebookSecret=${DEVSTUDY_MYPHOTOS_FACEBOOK_SECRET}
+    ports:
+      - 8080:8080
+      - 9990:9990
+      - 8787:8787
+    volumes:
+      - ./docker/storage:/opt/myphotos/storage
+      - ./docker/webroot:/opt/myphotos
+    networks:
+      - private-network
+    depends_on:
+      - myphotos-postgres
+    extra_hosts:
+      - "soap.myphotos.com:${DOCKER_HOST_IP:-172.17.0.1}"
+      - "api.myphotos.com:${DOCKER_HOST_IP:-172.17.0.1}"
+    command: sh -c '/wait-for-service-up.sh myphotos-postgres:5432 -- standalone.sh --debug --server-config=standalone-full.xml -bmanagement 0.0.0.0 -b 0.0.0.0'
+
+  myphotos-frontend:
+    image: nginx:1.17.2-alpine
+    container_name: myphotos-frontend
+    restart: always
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/proxy_backend.conf:/etc/nginx/proxy_backend.conf
+      - ./docker/nginx/static.conf:/etc/nginx/static.conf
+      - ./docker/webroot/media:/opt/myphotos/media
+      - ./docker/nginx/html/error:/opt/myphotos/error
+      - ./docker/nginx/html/static:/opt/myphotos/static
+      - ./docker/nginx/html/swagger:/opt/myphotos/swagger
+      - ./docker/nginx/html/favicon.ico:/opt/myphotos/favicon.ico
+    ports:
+      - 80:80
+    networks:
+      - private-network
+    depends_on:
+      - myphotos-backend
+
+networks:
+  private-network:
+    driver: bridge

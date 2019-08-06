@@ -1,0 +1,1189 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "MyPhotos.com API (Version 1.0)"
+  },
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "auth"
+    },
+    {
+      "name": "photo"
+    },
+    {
+      "name": "profile"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/sign-in/facebook": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Signs in via facebook",
+        "description": "Parameter 'code' - is code retrieved from facebook after successful authentification and authorization",
+        "operationId": "facebookSignIn",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AuthentificationCode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SimpleProfile"
+            }
+          },
+          "401": {
+            "description": "Invalid authentification code",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "404": {
+            "description": "Profile not found. It is necessry to sign-up. Response body contains retrieved data from facebook",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/sign-up/facebook": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Signs up via facebook",
+        "description": "Parameter 'code' - is code retrieved from facebook after successful authentification and authorization",
+        "operationId": "facebookSignUp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignUpProfile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SimpleProfile"
+            },
+            "headers": {
+              "ACCESS-TOKEN": {
+                "type": "string",
+                "description": "Personal access token which should be used for authentificated requests"
+              }
+            }
+          },
+          "400": {
+            "description": "Sign up profile has validation errors (all messages are locale depended)",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "401": {
+            "description": "Invalid authentification code",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/sign-in/google-plus": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Signs in via google plus",
+        "description": "Parameter 'code' - is code retrieved from google plus after successful authentification and authorization",
+        "operationId": "googplePlusSignIn",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AuthentificationCode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SimpleProfile"
+            }
+          },
+          "401": {
+            "description": "Invalid authentification code",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "404": {
+            "description": "Profile not found. It is necessry to sign-up. Response body contains retrieved data from google plus",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/sign-up/google-plus": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Signs up via google plus",
+        "description": "Parameter 'code' - is code retrieved from google plus after successful authentification and authorization",
+        "operationId": "googplePlusSignUp",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/SignUpProfile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/SimpleProfile"
+            },
+            "headers": {
+              "ACCESS-TOKEN": {
+                "type": "string",
+                "description": "Personal access token which should be used for authentificated requests"
+              }
+            }
+          },
+          "400": {
+            "description": "Sign up profile has validation errors (all messages are locale depended)",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "401": {
+            "description": "Invalid authentification code",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/sign-out": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Invalidates access token on server",
+        "description": "if response status = 401, it means that sign out success",
+        "operationId": "signOut",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ACCESS-TOKEN",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid access token",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/photo/preview/{id}": {
+      "get": {
+        "tags": [
+          "photo"
+        ],
+        "summary": "Gets large photo url by id",
+        "description": "FYI: This method increments view count for given photo",
+        "operationId": "viewLargePhoto",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Photo number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ImageLink"
+            }
+          },
+          "404": {
+            "description": "Photo not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/photo/download/{id}": {
+      "get": {
+        "tags": [
+          "photo"
+        ],
+        "summary": "Downloads original photo by id",
+        "description": "FYI: This method increments download count for given photo",
+        "operationId": "downloadOriginalImage",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Photo number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Photo not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/photo/all": {
+      "get": {
+        "tags": [
+          "photo"
+        ],
+        "summary": "Gets popular photos according to given sortMode",
+        "description": "If you need total photo count set withTotal=true",
+        "operationId": "findAllPhotos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "withTotal",
+            "in": "query",
+            "description": "Flag, which indicates to calculate or not total photo count",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "sortMode",
+            "in": "query",
+            "description": "Photos sort mode",
+            "required": false,
+            "type": "string",
+            "default": "popular_photo",
+            "enum": [
+              "popular_photo",
+              "popular_author"
+            ]
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Pagination page (this parameter should start with 1)",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Photos limit",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Photos"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/profile/{id}/avatar": {
+      "post": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Upload new avatar for profile by id",
+        "description": "Supported formats: jpg, png",
+        "operationId": "uploadAvatar",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profile number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "ACCESS-TOKEN",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "file to upload",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UploadImage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ImageLink"
+            }
+          },
+          "404": {
+            "description": "Profile not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "403": {
+            "description": "Access forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/profile/{id}/photo": {
+      "post": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Upload new photo for profile by id",
+        "description": "Supported formats: jpg, png",
+        "operationId": "uploadPhoto",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profile number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "ACCESS-TOKEN",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "file to upload",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UploadImage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ImageLink"
+            }
+          },
+          "404": {
+            "description": "Profile not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "403": {
+            "description": "Access forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/profile/{id}": {
+      "get": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Finds profile by id",
+        "description": "withPhotos and limit are optional. If withPhotos=true, this method returns profile with his photos, limited by limit parameter",
+        "operationId": "findProfile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profile number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "withPhotos",
+            "in": "query",
+            "description": "Flag, which adds or not profile photos to result",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Photos limit",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ProfileWithPhotos"
+            }
+          },
+          "404": {
+            "description": "Profile not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Update profile by id",
+        "description": "",
+        "operationId": "updateProfile",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Profile number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "ACCESS-TOKEN",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UpdateProfile"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Update profile has validation errors (all messages are locale depended)",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "404": {
+            "description": "Profile not found by id",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "403": {
+            "description": "Access forbidden",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/profile/{profileId}/photos": {
+      "get": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Finds profile photos",
+        "description": "If profile not found by profileId, this method return empty list with status code 200",
+        "operationId": "findProfilePhotos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "Profile number id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Pagination page (this parameter should start with 1)",
+            "required": false,
+            "type": "integer",
+            "default": 1,
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Photos limit",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Photos"
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "502": {
+            "description": "Service Unavailable"
+          },
+          "503": {
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SimpleProfile": {
+      "type": "object",
+      "required": [
+        "id",
+        "uid"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Profile id. Uses as unique identificator of profile via rest api"
+        },
+        "uid": {
+          "type": "string",
+          "description": "Profile uid. Can be useful if user wants to open profile via browser from his mobile application. Profile unique url will be http://myphotos.com/${uid}"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "required": [
+        "message",
+        "userError"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Error message. This message should be displayed to user if userError=true, otherwise it is message for developer"
+        },
+        "userError": {
+          "type": "boolean",
+          "description": "Category of error message. If userError=true, message should displayed to user, otherwise it is message for developer"
+        }
+      }
+    },
+    "Profile": {
+      "type": "object",
+      "required": [
+        "avatarUrl",
+        "firstName",
+        "id",
+        "jobTitle",
+        "lastName",
+        "location",
+        "photoCount",
+        "uid"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Profile id. Uses as unique identificator of profile via rest api"
+        },
+        "uid": {
+          "type": "string",
+          "description": "Profile uid. Can be useful if user wants to open profile via browser from his mobile application. Profile unique url will be http://myphotos.com/${uid}"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "photoCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AuthentificationCode": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Authentification code retrieved from social service"
+        }
+      }
+    },
+    "ValidationItem": {
+      "type": "object",
+      "required": [
+        "field",
+        "messages"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Parameter name"
+        },
+        "messages": {
+          "type": "array",
+          "description": "String error message list",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ValidationResult": {
+      "type": "object",
+      "required": [
+        "items",
+        "message",
+        "userError"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Error message. This message should be displayed to user if userError=true, otherwise it is message for developer"
+        },
+        "userError": {
+          "type": "boolean",
+          "description": "Category of error message. If userError=true, message should displayed to user, otherwise it is message for developer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ValidationItem"
+          }
+        }
+      }
+    },
+    "SignUpProfile": {
+      "type": "object",
+      "required": [
+        "code",
+        "firstName",
+        "jobTitle",
+        "lastName",
+        "location"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Authentification code retrieved from social service"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "location": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 5,
+          "maxLength": 100
+        }
+      }
+    },
+    "ImageLink": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "Photos": {
+      "type": "object",
+      "required": [
+        "photos"
+      ],
+      "properties": {
+        "photos": {
+          "type": "array",
+          "description": "Photo list",
+          "items": {
+            "$ref": "#/definitions/ProfilePhoto"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total photo count"
+        }
+      }
+    },
+    "ProfilePhoto": {
+      "type": "object",
+      "required": [
+        "downloads",
+        "id",
+        "smallUrl",
+        "views"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Photo id. Uses as unique identificator for /preview and /download api"
+        },
+        "smallUrl": {
+          "type": "string"
+        },
+        "views": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "downloads": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "UploadImage": {
+      "type": "object"
+    },
+    "UpdateProfile": {
+      "type": "object",
+      "required": [
+        "firstName",
+        "jobTitle",
+        "lastName",
+        "location"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "location": {
+          "type": "string",
+          "description": "Only latin characters allowed",
+          "minLength": 5,
+          "maxLength": 100
+        }
+      }
+    },
+    "ProfileWithPhotos": {
+      "type": "object",
+      "required": [
+        "avatarUrl",
+        "firstName",
+        "id",
+        "jobTitle",
+        "lastName",
+        "location",
+        "photoCount",
+        "photos",
+        "uid"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Profile id. Uses as unique identificator of profile via rest api"
+        },
+        "uid": {
+          "type": "string",
+          "description": "Profile uid. Can be useful if user wants to open profile via browser from his mobile application. Profile unique url will be http://myphotos.com/${uid}"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "photoCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "photos": {
+          "type": "array",
+          "description": "Photo list",
+          "items": {
+            "$ref": "#/definitions/ProfilePhoto"
+          }
+        }
+      }
+    }
+  }
+}
