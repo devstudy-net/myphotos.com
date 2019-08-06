@@ -76,25 +76,8 @@ docker run -v ~/:/home/mvn/ -it --rm -e MAVEN_CONFIG=/home/mvn/.m2 -v "$PWD":/op
 ~~~~
 cd ../
 ~~~~
-###### 9. Определить IP адрес docker хоста:
-~~~~
-ifconfig 
-~~~~
-В результатах вывода команды найти ip адрес docker интерфейса, т.е. что-то вроде этого:
-~~~~
-docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
-        inet6 fe80::42:9bff:fe65:607a  prefixlen 64  scopeid 0x20<link>
-        ether 02:42:9b:65:60:7a  txqueuelen 0  (Ethernet)
-        RX packets 147713  bytes 62284094 (62.2 MB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 251386  bytes 383996774 (383.9 MB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-~~~~
-*(В данном примере IP адрес docker хоста отображается во второй строке: **inet 172.17.0.1**)*
-
-###### 10. Создать файл '.env' в папке 'myphotos.com' и указать переменные окружения:
-*(Если данный файл не создавать, то в проекте не будут работать модули **myphotos-remote**, **facebook** и **google**):*
+###### 9. Создать файл '.env' в папке 'myphotos.com' и указать переменные окружения:
+*(Если данный файл не создавать, то в проекте не будут работать модули **myphotos-remote**, **google** и **facebook**):*
 ~~~~
 DOCKER_HOST_IP=${IP адрес docker хоста}
 
@@ -103,7 +86,8 @@ DEVSTUDY_MYPHOTOS_GOOGLE_CLIENT_ID=TODO
 DEVSTUDY_MYPHOTOS_FACEBOOK_CLIENT_ID=TODO
 DEVSTUDY_MYPHOTOS_FACEBOOK_SECRET=TODO
 ~~~~
-###### 11. Сконфигурировать домен myphotos.com:
+*FYI: По-умолчанию ip адрес docker хоста равен 172.17.0.1, если у Вас другой ip, его нужно задать в переменной DOCKER_HOST_IP, если ip адрес = 172.17.0.1, то можно данную переменную не создавать*
+###### 10. Сконфигурировать домен myphotos.com:
 Для этого необходимо добавить в файл `hosts` следующие записи 
 (т.е. при такой конфигурации домен myphotos.com и его поддомены будут сконфигурированы только на текущем компьютере)
 ~~~~
@@ -115,14 +99,15 @@ DEVSTUDY_MYPHOTOS_FACEBOOK_SECRET=TODO
 * **Windows**: C:\Windows\System32\drivers\etc\hosts
 * **Linux**: /etc/hosts
 * **macOS**: /private/etc/hosts
-###### 12. Собрать и запустить docker контейнеры:
+
+###### 11. Собрать и запустить docker контейнеры:
 ~~~~
 docker-compose up
 ~~~~
 *P.S. Если сборка и запуск docker контейнеров прошли успешно в консоли последней строчкой Вы должны увидеть строку, что **myphotos-backend server успешно запустился:***
 
 `myphotos-backend     | 14:19:41,749 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 10.1.0.Final (WildFly Core 2.2.0.Final) started in 17160ms - Started 1508 of 1783 services (490 services are lazy, passive or on-demand)` 
-###### 13. Открыть браузер и зайти на сайт:
+###### 12. Открыть браузер и зайти на сайт:
 * Web сайт приложения (Для компьютеров и мобильных устройств): `http://myphotos.com`;
 * REST API (Для интеграции по REST протоколу):
     * `http://api.myphotos.com/swagger-ui-2x/index.html` - Swagger Version 2x
@@ -135,16 +120,16 @@ docker-compose up
 *FYI: Для тестирования SOAP endpoint, необходимо установить SOAP клиент, например **Wizdler** для Chrome:*
 
 *(https://chrome.google.com/webstore/detail/wizdler/oebpmncolmhiapingjaagmapififiakb?hl=en)*
-###### 14. Если нужно отлаживать проект, то по-умолчанию docker-compose открывает следующие порты:
+###### 13. Если нужно отлаживать проект, то по-умолчанию docker-compose открывает следующие порты:
 * 5432 - для доступа к postgres базе данных, с помощью SQL клиента;
 * 8080 - для доступа к Wildfly, минуя nginx;
 * 9990 - для доступа к Wildfly admin панель (Администратор: admin/password);
 * 8787 - для Wildfly remote debugging;
-###### 15. Чтобы остановить docker контейнеры:
+###### 14. Чтобы остановить docker контейнеры:
 ~~~~
 Ctrl+C
 ~~~~
-###### 16. Чтобы удалить docker контейнеры:
+###### 15. Чтобы удалить docker контейнеры:
 ~~~~
 docker-compose down
 ~~~~
@@ -163,7 +148,6 @@ docker rmi -f devstudy/maven:jdk8
 ~~~~
 ###### 3. Удалить все файлы проекта кроме ./docker, ./docker-compose.yml, LICENSE, NOTICE:
 ~~~~
-cd ../
 rm -rf ./env ./myphotos ./myphotos-generator ./myphotos-mdb ./myphotos-remote-project ./README.md ./.git ./.gitignore
 ~~~~
 ###### 4. Удалить локальный maven репозиторий:
